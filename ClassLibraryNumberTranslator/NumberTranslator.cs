@@ -12,7 +12,7 @@
         /// <returns>Array of strings</returns>
         public static string[] Splitter(string To_Split)
         {
-            string[] arr = new string[2];
+            string[] arr;
             arr = To_Split.Split('.');
             return arr;
         }
