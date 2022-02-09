@@ -13,7 +13,7 @@
         public static string[] Splitter(string To_Split)
         {
             string[] arr;
-            arr = To_Split.Split('.');
+            arr = To_Split.Split('.',',');
             return arr;
         }
         public static long FromTo10_Left(string In_Bx)
