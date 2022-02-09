@@ -7,9 +7,9 @@ namespace ConsoleNumberTranslator
     {
         static void Main(string[] args)
         {
-            
-            // Splitter_Test();
-            // Merger_Test();
+            Console.WriteLine("Test");
+            Splitter_Test();
+            Merger_Test();
         }
         static void Splitter_Test()
         {
