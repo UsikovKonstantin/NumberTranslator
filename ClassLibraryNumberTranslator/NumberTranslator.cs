@@ -64,7 +64,7 @@ namespace ClassLibraryNumberTranslator
         public static string From10toQInt(string number, int Q)
         {
             string result = "";
-            int x = int.Parse(number);
+            long x = long.Parse(number);
             while (x > 0)
             {
                 result = IntToChar(x % Q) + result;
@@ -92,8 +92,8 @@ namespace ClassLibraryNumberTranslator
             while (x != Math.Truncate((double)x) && count < accuracy)
             {
                 x *= Q;
-                result += IntToChar((int)Math.Truncate((double)x));
-                x -= (int)Math.Truncate((double)x);
+                result += IntToChar((long)Math.Truncate((double)x));
+                x -= (long)Math.Truncate((double)x);
                 count++;
             }
 
@@ -102,7 +102,7 @@ namespace ClassLibraryNumberTranslator
 
 
         // Переводит символ в число
-        private static int CharToInt(char c)
+        private static long CharToInt(char c)
         {
             if (Char.IsDigit(c))
             {
@@ -116,7 +116,7 @@ namespace ClassLibraryNumberTranslator
 
 
         // Переводит число в символ
-        private static char IntToChar(int n)
+        private static char IntToChar(long n)
         {
             if (n < 10)
             {
