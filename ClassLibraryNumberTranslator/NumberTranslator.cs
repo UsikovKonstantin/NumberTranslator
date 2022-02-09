@@ -101,7 +101,7 @@ namespace ClassLibraryNumberTranslator
 
 
         // Переводит символ в число
-        private static long CharToInt(char c)
+        public static long CharToInt(char c)
         {
             if (Char.IsDigit(c))
             {
@@ -115,7 +115,7 @@ namespace ClassLibraryNumberTranslator
 
 
         // Переводит число в символ
-        private static char IntToChar(long n)
+        public static char IntToChar(long n)
         {
             if (n < 10)
             {
