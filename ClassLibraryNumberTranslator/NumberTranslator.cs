@@ -44,13 +44,13 @@ namespace ClassLibraryNumberTranslator
             int degree = 0;
             double result = 0;
 
-            for (int i = 2; i < number.Length; i++)
+            for (int i = 0; i < number.Length; i++)
             {
                 degree--;
                 result += CharToInt(number[i]) * Math.Pow(P, degree);
             }
-            
-            return result.ToString();
+            string output = result.ToString().Remove(0, 2);
+            return output;
         }
 
 
@@ -85,8 +85,8 @@ namespace ClassLibraryNumberTranslator
         /// <returns> число в системе с основанием Q </returns>
         public static string From10toQFrac(string number, int Q, int accuracy)
         {
-            string result = "0,";
-            double x = double.Parse(number);
+            string result = "";
+            double x = double.Parse("0."+number);
             int count = 0;
 
             while (x != Math.Truncate((double)x) && count < accuracy)
@@ -96,7 +96,6 @@ namespace ClassLibraryNumberTranslator
                 x -= (long)Math.Truncate((double)x);
                 count++;
             }
-
             return result;
         }
 
