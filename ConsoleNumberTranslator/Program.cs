@@ -1,36 +1,26 @@
-﻿using ClassLibraryNumberTranslator;
+﻿using System;
+using ClassLibraryNumberTranslator;
 using System.Diagnostics;
 
 namespace ConsoleNumberTranslator
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             Console.WriteLine("Test");
-            Splitter_Test();
-            Merger_Test();
+            FromPto10Int_Test();
+            From10toQInt_Test();
         }
-        static void Splitter_Test()
+        static void FromPto10Int_Test()
         {
-            { 
-                string[] arr1, arr2;
-                arr1 = NumberTranslator.Splitter("125.74");
-                arr2 = new string[] { "125", "74" };
-                Debug.Assert(arr1[0] == arr2[0] && arr1[1] == arr2[1]);
-            }
-            {
-                string[] arr1, arr2;
-                arr1 = NumberTranslator.Splitter("125,74");
-                arr2 = new string[] { "125", "74" };
-                Debug.Assert(arr1[0] == arr2[0] && arr1[1] == arr2[1]);
-            }
+            Debug.Assert(NumberTranslator.FromPto10Int("101", 2) == "5");
+            Debug.Assert(NumberTranslator.FromPto10Int("10", 2) == "2");
         }
-        static void Merger_Test()
+        static void From10toQInt_Test()
         {
-            string[] arr = new string[] { "547", "214" };
-            string str = NumberTranslator.Merger(arr[0], arr[1]);
-            Debug.Assert(str == "547.214");
+            Debug.Assert(NumberTranslator.From10toQInt("5", 2) == "101");
+            Debug.Assert(NumberTranslator.From10toQInt("2", 2) == "10");
         }
     }
 }
