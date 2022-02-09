@@ -24,7 +24,7 @@ namespace ClassLibraryNumberTranslator
             double result = 0;
             for (int i = number.Length - 1; i >= 0; i--)
             {
-                result += CharToInt(number[i]) * (int)Math.Pow(P, degree);
+                result += CharToInt(number[i]) * (long)Math.Pow(P, degree);
                 degree++;
             }
 
