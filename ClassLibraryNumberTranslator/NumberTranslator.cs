@@ -1,39 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ClassLibraryNumberTranslator
+﻿namespace ClassLibraryNumberTranslator
 {
     /// <summary>
     /// Класс для перевода вещественных чисел из одной системы счисления в другую
     /// </summary>
     public class NumberTranslator
     {
-        public static string[] Splitter (string To_Split)
+        /// <summary>
+        /// Splits the string
+        /// </summary>
+        /// <param name="To_Split">String to be split</param>
+        /// <returns>Array of strings</returns>
+        public static string[] Splitter(string To_Split)
         {
             string[] arr = new string[2];
-            To_Split = To_Split.Split(".");
+            arr = To_Split.Split('.');
             return arr;
         }
-        public static long FromTo10_Left (string In_Bx)
+        public static long FromTo10_Left(string In_Bx)
         {
-
-        } 
-        public static string From10To_Left (long In_B10)
+            return 0;
+        }
+        public static string From10To_Left(long In_B10)
         {
-
-        } 
+            return null;
+        }
         public static double FromTo10_Right(string In_Bx)
         {
-
+            return 0;
         }
-        public static string From10To_Right (long In_B10)
+        public static string From10To_Right(long In_B10)
         {
-
-        } 
-        public static string Merger (string A, string B)
+            return null;
+        }
+        /// <summary>
+        /// Merges 2 strings and adds a dot in between
+        /// </summary>
+        /// <param name="A"></param>
+        /// <param name="B"></param>
+        /// <returns></returns>
+        public static string Merger(string A, string B)
         {
             return A + "." + B;
         }
