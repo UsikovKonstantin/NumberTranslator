@@ -11,7 +11,7 @@ namespace ConsoleNumberTranslator
     {
         static void Main(string[] args)
         {
-
+            Console.WriteLine(NumberTranslator.From10toQFrac("0,5", 2, 10));
         }
     }
 }
