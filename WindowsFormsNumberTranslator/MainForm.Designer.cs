@@ -36,6 +36,8 @@ namespace WindowsFormsNumberTranslator
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.Data_Label = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.Accuracy = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // Number_Base_P
@@ -50,7 +52,7 @@ namespace WindowsFormsNumberTranslator
             // Number_Base_Q
             // 
             this.Number_Base_Q.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
-            this.Number_Base_Q.Location = new System.Drawing.Point(12, 126);
+            this.Number_Base_Q.Location = new System.Drawing.Point(12, 164);
             this.Number_Base_Q.Name = "Number_Base_Q";
             this.Number_Base_Q.ReadOnly = true;
             this.Number_Base_Q.Size = new System.Drawing.Size(891, 32);
@@ -98,17 +100,38 @@ namespace WindowsFormsNumberTranslator
             // 
             this.Data_Label.AutoSize = true;
             this.Data_Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
-            this.Data_Label.Location = new System.Drawing.Point(12, 161);
+            this.Data_Label.Location = new System.Drawing.Point(12, 199);
             this.Data_Label.Name = "Data_Label";
             this.Data_Label.Size = new System.Drawing.Size(164, 26);
             this.Data_Label.TabIndex = 8;
             this.Data_Label.Text = "Введите число";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
+            this.label1.Location = new System.Drawing.Point(48, 129);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(454, 26);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "Количество знаков после запятой в ответе";
+            // 
+            // Accuracy
+            // 
+            this.Accuracy.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
+            this.Accuracy.Location = new System.Drawing.Point(12, 126);
+            this.Accuracy.Name = "Accuracy";
+            this.Accuracy.Size = new System.Drawing.Size(30, 32);
+            this.Accuracy.TabIndex = 9;
+            this.Accuracy.TextChanged += new System.EventHandler(this.Accuracy_TextChanged);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(915, 399);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.Accuracy);
             this.Controls.Add(this.Data_Label);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -133,6 +156,8 @@ namespace WindowsFormsNumberTranslator
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label Data_Label;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox Accuracy;
     }
 }
 

@@ -30,13 +30,18 @@ namespace WindowsFormsNumberTranslator
         {
             At_Change();
         }
+
+        private void Accuracy_TextChanged(object sender, EventArgs e)
+        {
+            At_Change();
+        }
         /// <summary>
         /// Функция выполянющая действия
         /// </summary>
         void At_Change()
         {
             Data_Label.Text = "";
-            bool hit_num = false, hit_P = false, hit_Q = false; // Эти переменные нужны чтобы в вывод не попадало конфликтующих, неверных и других противоречащих утверждний
+            bool hit_num = false, hit_P = false, hit_Q = false, hit_acc = false; // Эти переменные нужны чтобы в вывод не попадало конфликтующих, неверных и других противоречащих утверждний
             // Введено ли что либо в поле текста?
             if (Number_Base_P.Text == "")
             {
@@ -53,12 +58,24 @@ namespace WindowsFormsNumberTranslator
                 Data_Label.Text += "Введите Основание Q. \n";
                 hit_Q = true;
             }
-            // Первый уровень неверности числа
-            try
+            if (Accuracy.Text == "")
             {
-                double.Parse(Number_Base_P.Text);
+                Data_Label.Text += "Введите количество знаков после запятой. \n";
+                hit_acc = true;
             }
-            catch (Exception)
+            // Первый уровень неверности числа
+            for (int i = 0; i < Number_Base_P.Text.Length; i++)
+            {
+                if (!(Char.IsNumber(Number_Base_P.Text[i]) || (Number_Base_P.Text[i] >= 'A' && Number_Base_P.Text[i] <= 'Z') || Number_Base_P.Text[i] == '.' || Number_Base_P.Text[i] == ','))
+                {
+                    if (!hit_num)
+                    {
+                        Data_Label.Text += "Неверный ввод числа по основанию P. \n";
+                        hit_num = true;
+                    }
+                }
+            }
+            if (Number_Base_P.Text[0] == '.' || Number_Base_P.Text[0] == ',' || Number_Base_P.Text[Number_Base_P.Text.Length-1] == '.' || Number_Base_P.Text[Number_Base_P.Text.Length - 1] == ',')
             {
                 if (!hit_num)
                 {
@@ -91,16 +108,33 @@ namespace WindowsFormsNumberTranslator
                     hit_Q = true;
                 }
             }
-            // Основания должны быть в этом промежутке
-            if (!hit_P && (int.Parse(Base_P.Text) <= 1 || int.Parse(Base_P.Text) > 10))
+            try
             {
-                Data_Label.Text += "Основание P должно быть в промежутке от 2 до 10 включительно. \n";
+                int.Parse(Accuracy.Text);
+            }
+            catch (Exception)
+            {
+                if (!hit_acc)
+                {
+                    Data_Label.Text += "Неверное количество знаков после запятой. \n";
+                    hit_acc = true;
+                }
+            }
+            // Основания должны быть в этом промежутке
+            if (!hit_P && (int.Parse(Base_P.Text) <= 1 || int.Parse(Base_P.Text) > 36))
+            {
+                Data_Label.Text += "Основание P должно быть в промежутке от 2 до 36 включительно. \n";
                 hit_P = true;
             }
-            if (!hit_Q && (int.Parse(Base_Q.Text) <= 1 || int.Parse(Base_Q.Text) > 10))
+            if (!hit_Q && (int.Parse(Base_Q.Text) <= 1 || int.Parse(Base_Q.Text) > 36))
             {
-                Data_Label.Text += "Основание Q должно быть в промежутке от 2 до 10 включительно. \n";
+                Data_Label.Text += "Основание Q должно быть в промежутке от 2 до 36 включительно. \n";
                 hit_Q = true;
+            }
+            if (!hit_acc && int.Parse(Accuracy.Text) < 0)
+            {
+                Data_Label.Text += "Количество знаков после запятой должно быть не отрицательным. \n";
+                hit_acc = true;
             }
             // В числе должен быть только один знак пунктуации
             if (!hit_num && (Number_Base_P.Text.IndexOf(".") != Number_Base_P.Text.LastIndexOf(".") ||
@@ -124,7 +158,7 @@ namespace WindowsFormsNumberTranslator
                 }
             }
             // Все проверки прошли
-            if (!hit_num && !hit_P && !hit_Q)
+            if (!hit_num && !hit_P && !hit_Q && !hit_acc)
             {
                 // Наше число не может быть больше чем 2^63 - 1,иначе будет переполнение переменной 
                 try
@@ -153,11 +187,11 @@ namespace WindowsFormsNumberTranslator
             }
             if (arr.Length == 2) // Когда есть нецелая часть (дробная)
             {
-                res[1] = NumberTranslator.From10toQFrac(NumberTranslator.FromPto10Frac(arr[1], int.Parse(Base_P.Text)), int.Parse(Base_Q.Text), 100);
+                res[1] = NumberTranslator.From10toQFrac(NumberTranslator.FromPto10Frac(arr[1], int.Parse(Base_P.Text)), int.Parse(Base_Q.Text), int.Parse(Accuracy.Text));
                 Number_Base_Q.Text = $"{res[0]}.{res[1]}";
                 return;
             }
             Number_Base_Q.Text = $"{res[0]}";
-        }
+        }   
     }
 }
