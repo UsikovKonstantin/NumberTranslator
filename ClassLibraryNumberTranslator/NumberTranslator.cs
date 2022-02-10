@@ -18,7 +18,7 @@ namespace ClassLibraryNumberTranslator
         {
             int degree = 0;
             long result = 0;
-            checked
+            checked // По дефолту overflow игнорируется, checked позволяет считать это за exception
             {
                 for (int i = number.Length - 1; i >= 0; i--)
                 {
@@ -47,8 +47,7 @@ namespace ClassLibraryNumberTranslator
                 degree--;
                 result += CharToInt(number[i]) * Math.Pow(P, degree);
             }
-            string output = result.ToString();
-            return output;
+            return result.ToString();
         }
 
 
@@ -69,14 +68,13 @@ namespace ClassLibraryNumberTranslator
                 result = IntToChar(x % Q) + result;
                 x /= Q;
             }
-
             return result;
         }
 
 
         /// <summary>
         /// Перевод дробной части числа из системы с основанием 10 в систему с основанием Q
-        /// Пример: From10toQFrac("0,5", 2, 10) => "0,1"
+        /// Пример: From10toQFrac("0,5", 2, 10) => "1"
         /// </summary>
         /// <param name="number"> дробная часть числа </param>
         /// <param name="Q"> нужная система счисления </param>
@@ -87,7 +85,6 @@ namespace ClassLibraryNumberTranslator
             string result = "";
             double x = double.Parse(number);
             int count = 0;
-
             while (x != Math.Truncate((double)x) && count < accuracy)
             {
                 x *= Q;

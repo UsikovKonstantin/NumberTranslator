@@ -31,14 +31,14 @@ namespace ConsoleNumberTranslator
         }
         static void FromPto10Frac_Test()
         {
-            Debug.Assert(NumberTranslator.FromPto10Frac("1101", 2) == "8125");
-            Debug.Assert(NumberTranslator.FromPto10Frac("53", 8) == "671875");
+            Debug.Assert(NumberTranslator.FromPto10Frac("1101", 2) == "0.8125");
+            Debug.Assert(NumberTranslator.FromPto10Frac("53", 8) == "0.671875");
             Console.WriteLine($"Tests for FromPto10Frac passed.");
         }
         static void From10toQFrac_Test()
         {
-            Debug.Assert(NumberTranslator.From10toQFrac("8125", 2,10) == "1101");
-            Debug.Assert(NumberTranslator.From10toQFrac("671875", 8,10) == "53");
+            Debug.Assert(NumberTranslator.From10toQFrac("0.8125", 2,10) == "1101");
+            Debug.Assert(NumberTranslator.From10toQFrac("0.671875", 8,10) == "53");
             Console.WriteLine($"Tests for From10toQFrac passed.");
         }
     }
