@@ -116,25 +116,37 @@ namespace WindowsFormsNumberTranslator
             }
             if (!hit_num && !hit_P && !hit_Q)
             {
-                Find_Q_Num();
+                try
+                {
+                    Find_Q_Num();
+                }
+                catch (Exception)
+                {
+                    Data_Label.Text += "Целая часть вызвала переполнение. \n";
+                }
             }
         }
         void Find_Q_Num()
         {
             string[] arr = Number_Base_P.Text.Split('.', ',');
-            string[] res = new string[arr.Length];
-            if (arr.Length == 2 && arr[1].Length>0)
+            string[] res = new string[] { "", "" };
+            if (arr[0][0] == '-')
             {
+                arr[0] = arr[0].Remove(0, 1);
                 res[0] = NumberTranslator.From10toQInt(NumberTranslator.FromPto10Int(arr[0], int.Parse(Base_P.Text)), int.Parse(Base_Q.Text));
-                res[1] = NumberTranslator.From10toQFrac(NumberTranslator.FromPto10Frac(arr[1], int.Parse(Base_P.Text)), int.Parse(Base_Q.Text), 10);
-                Number_Base_Q.Text = $"{res[0]}.{res[1]}";
+                res[0] = "-" + res[0];
             }
             else
             {
                 res[0] = NumberTranslator.From10toQInt(NumberTranslator.FromPto10Int(arr[0], int.Parse(Base_P.Text)), int.Parse(Base_Q.Text));
-                Number_Base_Q.Text = $"{res[0]}";
             }
-
+            if (arr.Length == 2)
+            {
+                res[1] = NumberTranslator.From10toQFrac(NumberTranslator.FromPto10Frac(arr[1], int.Parse(Base_P.Text)), int.Parse(Base_Q.Text), 10);
+                Number_Base_Q.Text = $"{res[0]}.{res[1]}";
+                return;
+            }
+            Number_Base_Q.Text = $"{res[0]}";
         }
     }
 }

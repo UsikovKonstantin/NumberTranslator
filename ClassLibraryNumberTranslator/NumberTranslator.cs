@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ClassLibraryNumberTranslator
 {
@@ -21,13 +17,15 @@ namespace ClassLibraryNumberTranslator
         public static string FromPto10Int(string number, int P)
         {
             int degree = 0;
-            double result = 0;
-            for (int i = number.Length - 1; i >= 0; i--)
+            long result = 0;
+            checked
             {
-                result += CharToInt(number[i]) * (long)Math.Pow(P, degree);
-                degree++;
+                for (int i = number.Length - 1; i >= 0; i--)
+                {
+                    result += CharToInt(number[i]) * (long)Math.Pow(P, degree);
+                    degree++;
+                }
             }
-
             return result.ToString();
         }
 
@@ -49,7 +47,7 @@ namespace ClassLibraryNumberTranslator
                 degree--;
                 result += CharToInt(number[i]) * Math.Pow(P, degree);
             }
-            string output = result.ToString().Remove(0, 2);
+            string output = result.ToString();
             return output;
         }
 
@@ -64,7 +62,8 @@ namespace ClassLibraryNumberTranslator
         public static string From10toQInt(string number, int Q)
         {
             string result = "";
-            long x = long.Parse(number);
+            long x;
+            x = long.Parse(number);
             while (x > 0)
             {
                 result = IntToChar(x % Q) + result;
@@ -86,7 +85,7 @@ namespace ClassLibraryNumberTranslator
         public static string From10toQFrac(string number, int Q, int accuracy)
         {
             string result = "";
-            double x = double.Parse("0."+number);
+            double x = double.Parse(number);
             int count = 0;
 
             while (x != Math.Truncate((double)x) && count < accuracy)
