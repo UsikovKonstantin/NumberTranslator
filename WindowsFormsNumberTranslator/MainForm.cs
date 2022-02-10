@@ -153,7 +153,7 @@ namespace WindowsFormsNumberTranslator
             }
             if (arr.Length == 2) // Когда есть нецелая часть (дробная)
             {
-                res[1] = NumberTranslator.From10toQFrac(NumberTranslator.FromPto10Frac(arr[1], int.Parse(Base_P.Text)), int.Parse(Base_Q.Text), 10);
+                res[1] = NumberTranslator.From10toQFrac(NumberTranslator.FromPto10Frac(arr[1], int.Parse(Base_P.Text)), int.Parse(Base_Q.Text), 100);
                 Number_Base_Q.Text = $"{res[0]}.{res[1]}";
                 return;
             }
