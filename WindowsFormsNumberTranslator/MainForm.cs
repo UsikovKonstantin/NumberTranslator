@@ -41,6 +41,7 @@ namespace WindowsFormsNumberTranslator
         void At_Change()
         {
             Data_Label.Text = "";
+            Number_Base_Q.Text = "";
             bool hit_num = false, hit_P = false, hit_Q = false, hit_acc = false; // Эти переменные нужны чтобы в вывод не попадало конфликтующих, неверных и других противоречащих утверждний
             // Введено ли что либо в поле текста?
             if (Number_Base_P.Text == "")
@@ -67,7 +68,8 @@ namespace WindowsFormsNumberTranslator
             for (int i = 0; i < Number_Base_P.Text.Length; i++)
             {
                 if (!(Char.IsNumber(Number_Base_P.Text[i]) 
-                    || (Number_Base_P.Text[i] >= 'A' && Number_Base_P.Text[i] <= 'Z') 
+                    || (Number_Base_P.Text[i] >= 'A' && Number_Base_P.Text[i] <= 'Z')
+                    || (Number_Base_P.Text[i] >= 'a' && Number_Base_P.Text[i] <= 'z')
                     || Number_Base_P.Text[i] == '.' || Number_Base_P.Text[i] == ','))
                 {
                     if (!hit_num)
