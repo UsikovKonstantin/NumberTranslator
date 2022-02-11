@@ -72,7 +72,7 @@ namespace WindowsFormsNumberTranslator
                     || (Number_Base_P.Text[i] >= 'a' && Number_Base_P.Text[i] <= 'z')
                     || Number_Base_P.Text[i] == '.' || Number_Base_P.Text[i] == ','))
                 {
-                    Data_Label.Text += "Неверный ввод числа по основанию P. \n";
+                    Data_Label.Text += "Неверный ввод числа по основанию P. Допустимые символы: 0..9, a..z, A..Z. \n";
                     hit_num = true;
                     break;
                 }
@@ -81,7 +81,7 @@ namespace WindowsFormsNumberTranslator
                 || Number_Base_P.Text[Number_Base_P.Text.Length - 1] == '.'
                 || Number_Base_P.Text[Number_Base_P.Text.Length - 1] == ','))
             {
-                Data_Label.Text += "Неверный ввод числа по основанию P. \n";
+                Data_Label.Text += "Число по основанию P начинается или заканчивается символом пунктуации. \n";
                 hit_num = true;
             }
             // Корректность оснований
@@ -93,7 +93,7 @@ namespace WindowsFormsNumberTranslator
             {
                 if (!hit_P)
                 {
-                    Data_Label.Text += "Неверное основание P. \n";
+                    Data_Label.Text += "Введённое основание P нельзя привести к целому типу. \n";
                     hit_P = true;
                 }
             }
@@ -105,7 +105,7 @@ namespace WindowsFormsNumberTranslator
             {
                 if (!hit_Q)
                 {
-                    Data_Label.Text += "Неверное основание Q. \n";
+                    Data_Label.Text += "Введённое основание Q нельзя привести к целому типу. \n";
                     hit_Q = true;
                 }
             }
@@ -117,7 +117,7 @@ namespace WindowsFormsNumberTranslator
             {
                 if (!hit_acc)
                 {
-                    Data_Label.Text += "Неверное количество знаков после запятой. \n";
+                    Data_Label.Text += "Введённое количество знаков после запятой нельзя привести к целому типу. \n";
                     hit_acc = true;
                 }
             }
@@ -153,7 +153,7 @@ namespace WindowsFormsNumberTranslator
                     if (NumberTranslator.CharToLong(Number_Base_P.Text[i]) >= int.Parse(Base_P.Text))
                     {
                         hit_num = true;
-                        Data_Label.Text += $"В числе по основанию P присутствует цифра недопустимая в системе счисления {Base_P.Text}.";
+                        Data_Label.Text += $"В числе присутствует цифра ({Number_Base_P.Text[i]}) недопустимая в системе счисления {Base_P.Text}. \n";
                         break;
                     }
                 }
@@ -186,7 +186,7 @@ namespace WindowsFormsNumberTranslator
             {
                 res[0] = NumberTranslator.From10toQInt(NumberTranslator.FromPto10Int(arr[0], int.Parse(Base_P.Text)), int.Parse(Base_Q.Text));
             }
-            if (arr.Length == 2) // Когда есть нецелая часть (дробная)
+            if (arr.Length == 2 && int.Parse(Accuracy.Text) != 0) // Когда есть нецелая часть (дробная)
             {
                 res[1] = NumberTranslator.From10toQFrac(NumberTranslator.FromPto10Frac(arr[1], int.Parse(Base_P.Text)), int.Parse(Base_Q.Text), int.Parse(Accuracy.Text));
                 Number_Base_Q.Text = $"{res[0]}.{res[1]}";
