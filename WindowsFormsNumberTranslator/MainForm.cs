@@ -51,12 +51,12 @@ namespace WindowsFormsNumberTranslator
             }
             if (Base_P.Text == "")
             {
-                Data_Label.Text += "Введите Основание P. \n";
+                Data_Label.Text += "Введите основание P. \n";
                 hit_P = true;
             }
             if (Base_Q.Text == "")
             {
-                Data_Label.Text += "Введите Основание Q. \n";
+                Data_Label.Text += "Введите основание Q. \n";
                 hit_Q = true;
             }
             if (Accuracy.Text == "")
@@ -153,7 +153,7 @@ namespace WindowsFormsNumberTranslator
                     if (NumberTranslator.CharToLong(Number_Base_P.Text[i]) >= int.Parse(Base_P.Text))
                     {
                         hit_num = true;
-                        Data_Label.Text += $"В числе присутствует цифра ({Number_Base_P.Text[i]}) недопустимая в системе счисления {Base_P.Text}. \n";
+                        Data_Label.Text += $"В числе присутствует цифра \"{Number_Base_P.Text[i]}\" недопустимая в системе счисления {Base_P.Text}. \n";
                         break;
                     }
                 }

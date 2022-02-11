@@ -102,9 +102,10 @@ namespace WindowsFormsNumberTranslator
             this.Data_Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
             this.Data_Label.Location = new System.Drawing.Point(12, 199);
             this.Data_Label.Name = "Data_Label";
-            this.Data_Label.Size = new System.Drawing.Size(164, 26);
+            this.Data_Label.Size = new System.Drawing.Size(456, 104);
             this.Data_Label.TabIndex = 8;
-            this.Data_Label.Text = "Введите число";
+            this.Data_Label.Text = "Введите число по основанию P.\r\nВведите основание P.\r\nВведите основание Q.\r\nВведит" +
+    "е количество знаков после запятой.";
             // 
             // label1
             // 
