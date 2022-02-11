@@ -67,11 +67,10 @@ namespace WindowsFormsNumberTranslator
             // Первый уровень неверности числа
             for (int i = 0; i < Number_Base_P.Text.Length; i++)
             {
-                if ((!(Char.IsNumber(Number_Base_P.Text[i])
+                if (!(char.IsNumber(Number_Base_P.Text[i])
                     || (Number_Base_P.Text[i] >= 'A' && Number_Base_P.Text[i] <= 'Z')
                     || (Number_Base_P.Text[i] >= 'a' && Number_Base_P.Text[i] <= 'z')
                     || Number_Base_P.Text[i] == '.' || Number_Base_P.Text[i] == ','))
-                    && !hit_num)
                 {
                     Data_Label.Text += "Неверный ввод числа по основанию P. \n";
                     hit_num = true;
