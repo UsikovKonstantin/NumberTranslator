@@ -67,24 +67,23 @@ namespace WindowsFormsNumberTranslator
             // Первый уровень неверности числа
             for (int i = 0; i < Number_Base_P.Text.Length; i++)
             {
-                if (!(Char.IsNumber(Number_Base_P.Text[i]) 
+                if ((!(Char.IsNumber(Number_Base_P.Text[i])
                     || (Number_Base_P.Text[i] >= 'A' && Number_Base_P.Text[i] <= 'Z')
                     || (Number_Base_P.Text[i] >= 'a' && Number_Base_P.Text[i] <= 'z')
                     || Number_Base_P.Text[i] == '.' || Number_Base_P.Text[i] == ','))
+                    && !hit_num)
                 {
-                    if (!hit_num)
-                    {
-                        Data_Label.Text += "Неверный ввод числа по основанию P. \n";
-                        hit_num = true;
-                    }
-                }
-            }
-            if (!hit_num && (Number_Base_P.Text[0] == '.' || Number_Base_P.Text[0] == ',' 
-                || Number_Base_P.Text[Number_Base_P.Text.Length-1] == '.' 
-                || Number_Base_P.Text[Number_Base_P.Text.Length - 1] == ','))
-            {
                     Data_Label.Text += "Неверный ввод числа по основанию P. \n";
                     hit_num = true;
+                    break;
+                }
+            }
+            if (!hit_num && (Number_Base_P.Text[0] == '.' || Number_Base_P.Text[0] == ','
+                || Number_Base_P.Text[Number_Base_P.Text.Length - 1] == '.'
+                || Number_Base_P.Text[Number_Base_P.Text.Length - 1] == ','))
+            {
+                Data_Label.Text += "Неверный ввод числа по основанию P. \n";
+                hit_num = true;
             }
             // Корректность оснований
             try
@@ -195,6 +194,6 @@ namespace WindowsFormsNumberTranslator
                 return;
             }
             Number_Base_Q.Text = $"{res[0]}";
-        }   
+        }
     }
 }
