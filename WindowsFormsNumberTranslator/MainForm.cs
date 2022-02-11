@@ -150,7 +150,7 @@ namespace WindowsFormsNumberTranslator
             {
                 for (int i = 0; i < Number_Base_P.Text.Length; i++)
                 {
-                    if (NumberTranslator.CharToInt(Number_Base_P.Text[i]) >= int.Parse(Base_P.Text))
+                    if (NumberTranslator.CharToLong(Number_Base_P.Text[i]) >= int.Parse(Base_P.Text))
                     {
                         hit_num = true;
                         Data_Label.Text += $"В числе по основанию P присутствует цифра недопустимая в системе счисления {Base_P.Text}.";
