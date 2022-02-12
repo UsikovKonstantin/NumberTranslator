@@ -138,7 +138,7 @@ namespace ClassLibraryNumberTranslator
             }
             res[0] += From10toQInt(FromPto10Int(input[0], P), Q);
 
-            if (input.Length == 2 && accuracy != 0) // Когда есть нецелая часть (дробная)
+            if (input.Length == 2 && accuracy != 0 && double.Parse(FromPto10Frac(input[1], P)) != 0) // Когда есть нецелая часть (дробная)
             {
                 res[1] = From10toQFrac(FromPto10Frac(input[1], P), Q, accuracy);
                 if (res[1] == "")
