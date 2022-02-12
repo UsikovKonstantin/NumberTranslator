@@ -41,6 +41,10 @@ namespace ClassLibraryNumberTranslator
         {
             string result = "";
             long x = long.Parse(number);
+            if (x == 0)
+            {
+                result = "0";
+            }
             while (x > 0)
             {
                 result = LongToChar(x % Q) + result;
