@@ -15,6 +15,7 @@ namespace ConsoleNumberTranslator
             From10toQFrac_Test();
             CharToLong_Test();
             LongToChar_Test();
+            FromPtoQ_Test();
             Console.WriteLine("All tests passed.");
             Console.ReadLine();
         }
@@ -57,6 +58,13 @@ namespace ConsoleNumberTranslator
             Debug.Assert(NumberTranslator.LongToChar(35) == 'Z');
             Debug.Assert(NumberTranslator.LongToChar(4) == '4');
             Console.WriteLine("Tests for LongToChar passed.");
+        }
+
+        static void FromPtoQ_Test()
+        {
+            Debug.Assert(NumberTranslator.FromPtoQ("A.F", 16, 2, 10) == "1010.1111");
+            Debug.Assert(NumberTranslator.FromPtoQ("5.5", 10, 2, 10) == "101.1");
+            Console.WriteLine("Tests for FromPtoQ passed.");
         }
     }
 }

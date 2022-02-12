@@ -65,16 +65,30 @@ namespace WindowsFormsNumberTranslator
                 hit_acc = true;
             }
             // Первый уровень неверности числа
-            for (int i = 0; i < Number_Base_P.Text.Length; i++)
+            if (!hit_num && (Number_Base_P.Text.IndexOf("-") != Number_Base_P.Text.LastIndexOf("-")))
             {
-                if (!(char.IsNumber(Number_Base_P.Text[i])
-                    || (Number_Base_P.Text[i] >= 'A' && Number_Base_P.Text[i] <= 'Z')
-                    || (Number_Base_P.Text[i] >= 'a' && Number_Base_P.Text[i] <= 'z')
-                    || Number_Base_P.Text[i] == '.' || Number_Base_P.Text[i] == ','))
+                Data_Label.Text += "В числе по основанию P присутствует более чем один символ '-'. \n";
+                hit_num = true;
+            }
+            if (!hit_num && Number_Base_P.Text.IndexOf("-") != -1 && Number_Base_P.Text.IndexOf("-") != 0)
+            {
+                Data_Label.Text += "В числе по основанию P символ '-' стоит не на первой позиции. \n";
+                hit_num = true;
+            }
+            if (!hit_num)
+            {
+                for (int i = 0; i < Number_Base_P.Text.Length; i++)
                 {
-                    Data_Label.Text += "Неверный ввод числа по основанию P. Допустимые символы: 0..9, a..z, A..Z. \n";
-                    hit_num = true;
-                    break;
+                    if (!(char.IsNumber(Number_Base_P.Text[i])
+                        || (Number_Base_P.Text[i] >= 'A' && Number_Base_P.Text[i] <= 'Z')
+                        || (Number_Base_P.Text[i] >= 'a' && Number_Base_P.Text[i] <= 'z')
+                        || Number_Base_P.Text[i] == '.' || Number_Base_P.Text[i] == ','
+                        || (i == 0 && Number_Base_P.Text[i] == '-')))
+                    {
+                        Data_Label.Text += "Неверный ввод числа по основанию P. Допустимые символы: -, 0..9, a..z, A..Z. \n";
+                        hit_num = true;
+                        break;
+                    }
                 }
             }
             if (!hit_num && (Number_Base_P.Text[0] == '.' || Number_Base_P.Text[0] == ','
@@ -164,35 +178,13 @@ namespace WindowsFormsNumberTranslator
                 // Наше число не может быть больше чем 2^63 - 1,иначе будет переполнение переменной 
                 try
                 {
-                    Find_Q_Num();
+                    Number_Base_Q.Text = NumberTranslator.FromPtoQ(Number_Base_P.Text, int.Parse(Base_P.Text), int.Parse(Base_Q.Text), int.Parse(Accuracy.Text));
                 }
                 catch (Exception)
                 {
                     Data_Label.Text += "Целая часть вызвала переполнение. \n";
                 }
             }
-        }
-        void Find_Q_Num()
-        {
-            string[] arr = Number_Base_P.Text.Split('.', ',');
-            string[] res = new string[] { "", "" };
-            if (arr[0][0] == '-') // Для отрицательных чисел 
-            {
-                arr[0] = arr[0].Remove(0, 1);
-                res[0] = NumberTranslator.From10toQInt(NumberTranslator.FromPto10Int(arr[0], int.Parse(Base_P.Text)), int.Parse(Base_Q.Text));
-                res[0] = "-" + res[0];
-            }
-            else
-            {
-                res[0] = NumberTranslator.From10toQInt(NumberTranslator.FromPto10Int(arr[0], int.Parse(Base_P.Text)), int.Parse(Base_Q.Text));
-            }
-            if (arr.Length == 2 && int.Parse(Accuracy.Text) != 0) // Когда есть нецелая часть (дробная)
-            {
-                res[1] = NumberTranslator.From10toQFrac(NumberTranslator.FromPto10Frac(arr[1], int.Parse(Base_P.Text)), int.Parse(Base_Q.Text), int.Parse(Accuracy.Text));
-                Number_Base_Q.Text = $"{res[0]}.{res[1]}";
-                return;
-            }
-            Number_Base_Q.Text = $"{res[0]}";
         }
     }
 }
