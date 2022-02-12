@@ -189,6 +189,11 @@ namespace WindowsFormsNumberTranslator
             if (arr.Length == 2 && int.Parse(Accuracy.Text) != 0) // Когда есть нецелая часть (дробная)
             {
                 res[1] = NumberTranslator.From10toQFrac(NumberTranslator.FromPto10Frac(arr[1], int.Parse(Base_P.Text)), int.Parse(Base_Q.Text), int.Parse(Accuracy.Text));
+                if (res[1] == "")
+                {
+                    Number_Base_Q.Text = $"{res[0]}.({NumberTranslator.LongToChar(int.Parse(Base_Q.Text)-1)})";
+                    return;
+                }
                 Number_Base_Q.Text = $"{res[0]}.{res[1]}";
                 return;
             }
