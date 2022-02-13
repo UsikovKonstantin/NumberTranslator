@@ -46,17 +46,17 @@ namespace WindowsFormsNumberTranslator
             // Введено ли что либо в поле текста?
             if (Number_Base_P.Text == "")
             {
-                Data_Label.Text += "Введите число по основанию P. \n";
+                Data_Label.Text += "Введите исходное число. \n";
                 hit_num = true;
             }
             if (Base_P.Text == "")
             {
-                Data_Label.Text += "Введите основание P. \n";
+                Data_Label.Text += "Введите исходное основание. \n";
                 hit_P = true;
             }
             if (Base_Q.Text == "")
             {
-                Data_Label.Text += "Введите основание Q. \n";
+                Data_Label.Text += "Введите основание результата. \n";
                 hit_Q = true;
             }
             if (Accuracy.Text == "")
@@ -67,12 +67,12 @@ namespace WindowsFormsNumberTranslator
             // Первый уровень неверности числа
             if (!hit_num && (Number_Base_P.Text.IndexOf("-") != Number_Base_P.Text.LastIndexOf("-")))
             {
-                Data_Label.Text += "В числе по основанию P присутствует более чем один символ '-'. \n";
+                Data_Label.Text += "В исходном числе присутствует более чем один символ '-'. \n";
                 hit_num = true;
             }
             if (!hit_num && Number_Base_P.Text.IndexOf("-") != -1 && Number_Base_P.Text.IndexOf("-") != 0)
             {
-                Data_Label.Text += "В числе по основанию P символ '-' стоит не на первой позиции. \n";
+                Data_Label.Text += "В исходном числе символ '-' стоит не на первой позиции. \n";
                 hit_num = true;
             }
             if (!hit_num)
@@ -85,7 +85,7 @@ namespace WindowsFormsNumberTranslator
                         || Number_Base_P.Text[i] == '.' || Number_Base_P.Text[i] == ','
                         || (i == 0 && Number_Base_P.Text[i] == '-')))
                     {
-                        Data_Label.Text += "Неверный ввод числа по основанию P. Допустимые символы: -, 0..9, a..z, A..Z. \n";
+                        Data_Label.Text += "Неверный ввод исходного числа. Допустимые символы: -, 0..9, a..z, A..Z. \n";
                         hit_num = true;
                         break;
                     }
@@ -95,7 +95,7 @@ namespace WindowsFormsNumberTranslator
                 || Number_Base_P.Text[Number_Base_P.Text.Length - 1] == '.'
                 || Number_Base_P.Text[Number_Base_P.Text.Length - 1] == ','))
             {
-                Data_Label.Text += "Число по основанию P начинается или заканчивается символом пунктуации. \n";
+                Data_Label.Text += "Исходное число начинается или заканчивается символом пунктуации. \n";
                 hit_num = true;
             }
             // Корректность оснований
@@ -107,7 +107,7 @@ namespace WindowsFormsNumberTranslator
             {
                 if (!hit_P)
                 {
-                    Data_Label.Text += "Введённое основание P нельзя привести к целому типу. \n";
+                    Data_Label.Text += "Исходное основание нельзя привести к целому типу. \n";
                     hit_P = true;
                 }
             }
@@ -119,7 +119,7 @@ namespace WindowsFormsNumberTranslator
             {
                 if (!hit_Q)
                 {
-                    Data_Label.Text += "Введённое основание Q нельзя привести к целому типу. \n";
+                    Data_Label.Text += "Основание результата нельзя привести к целому типу. \n";
                     hit_Q = true;
                 }
             }
@@ -131,19 +131,19 @@ namespace WindowsFormsNumberTranslator
             {
                 if (!hit_acc)
                 {
-                    Data_Label.Text += "Введённое количество знаков после запятой нельзя привести к целому типу. \n";
+                    Data_Label.Text += "Количество знаков после запятой нельзя привести к целому типу. \n";
                     hit_acc = true;
                 }
             }
             // Основания должны быть в этом промежутке
             if (!hit_P && (int.Parse(Base_P.Text) <= 1 || int.Parse(Base_P.Text) > 36))
             {
-                Data_Label.Text += "Основание P должно быть в промежутке от 2 до 36 включительно. \n";
+                Data_Label.Text += "Исходное основание должно быть в промежутке от 2 до 36 включительно. \n";
                 hit_P = true;
             }
             if (!hit_Q && (int.Parse(Base_Q.Text) <= 1 || int.Parse(Base_Q.Text) > 36))
             {
-                Data_Label.Text += "Основание Q должно быть в промежутке от 2 до 36 включительно. \n";
+                Data_Label.Text += "Основание результата должно быть в промежутке от 2 до 36 включительно. \n";
                 hit_Q = true;
             }
             if (!hit_acc && int.Parse(Accuracy.Text) < 0)
@@ -157,7 +157,7 @@ namespace WindowsFormsNumberTranslator
                 Number_Base_P.Text.IndexOf(".") > -1 && Number_Base_P.Text.LastIndexOf(",") > -1)))
             {
                 hit_num = true;
-                Data_Label.Text += "В числе присутствует более чем один символ пунктуации. \n";
+                Data_Label.Text += "В исходном числе присутствует более чем один символ пунктуации. \n";
             }
             // Все цифры числа должны быть допустимыми в выбранной системе счисления
             if (!hit_num && !hit_P)
@@ -167,7 +167,7 @@ namespace WindowsFormsNumberTranslator
                     if (NumberTranslator.CharToLong(Number_Base_P.Text[i]) >= int.Parse(Base_P.Text))
                     {
                         hit_num = true;
-                        Data_Label.Text += $"В числе присутствует цифра \"{Number_Base_P.Text[i]}\" недопустимая в системе счисления {Base_P.Text}. \n";
+                        Data_Label.Text += $"В исходном числе присутствует цифра \"{Number_Base_P.Text[i]}\" недопустимая в системе счисления {Base_P.Text}. \n";
                         break;
                     }
                 }
@@ -178,11 +178,12 @@ namespace WindowsFormsNumberTranslator
                 // Наше число не может быть больше чем 2^63 - 1,иначе будет переполнение переменной 
                 try
                 {
-                    Number_Base_Q.Text = NumberTranslator.FromPtoQ(Number_Base_P.Text, int.Parse(Base_P.Text), int.Parse(Base_Q.Text), int.Parse(Accuracy.Text));
+                    string result = NumberTranslator.FromPtoQ(Number_Base_P.Text, int.Parse(Base_P.Text), int.Parse(Base_Q.Text), int.Parse(Accuracy.Text));
+                    Number_Base_Q.Text = result.Substring(0, Math.Min(50, result.Length));      // Чтобы результат не выходил за границы textbox
                 }
                 catch (Exception)
                 {
-                    Data_Label.Text += "Целая часть вызвала переполнение. \n";
+                    Data_Label.Text += "Целая часть числа вызвала переполнение. \n";
                 }
             }
         }
