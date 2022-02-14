@@ -1,6 +1,6 @@
-﻿using ClassLibraryNumberTranslator;
-using System;
+﻿using System;
 using System.Windows.Forms;
+using ClassLibraryNumberTranslator;
 
 namespace WindowsFormsNumberTranslator
 {
@@ -35,9 +35,7 @@ namespace WindowsFormsNumberTranslator
         {
             At_Change();
         }
-        /// <summary>
-        /// Функция выполянющая действия
-        /// </summary>
+
         void At_Change()
         {
             Data_Label.Text = "";
@@ -46,42 +44,53 @@ namespace WindowsFormsNumberTranslator
             Base_Q_Error.Visible = false;
             Number_Base_P_Error.Visible = false;
             Accuracy_Error.Visible = false;
-            bool hit_num = false, hit_P = false, hit_Q = false, hit_acc = false; // Эти переменные нужны чтобы в вывод не попадало конфликтующих, неверных и других противоречащих утверждний
+
+            // Эти переменные нужны чтобы в вывод не попадало конфликтующих, неверных и других противоречащих утверждний
+            bool num_Fail = false, P_Fail = false, Q_Fail = false, acc_Fail = false;
+
             // Введено ли что либо в поле текста?
             if (Number_Base_P.Text == "")
             {
                 Data_Label.Text += "Введите исходное число. \n";
-                hit_num = true;
+                num_Fail = true;
             }
+
             if (Base_P.Text == "")
             {
                 Data_Label.Text += "Введите исходное основание. \n";
-                hit_P = true;
+                P_Fail = true;
             }
+
             if (Base_Q.Text == "")
             {
                 Data_Label.Text += "Введите основание результата. \n";
-                hit_Q = true;
+                Q_Fail = true;
             }
+
             if (Accuracy.Text == "")
             {
                 Data_Label.Text += "Введите количество знаков после запятой. \n";
-                hit_acc = true;
+                acc_Fail = true;
             }
-            // Первый уровень неверности числа
-            if (!hit_num && (Number_Base_P.Text.IndexOf("-") != Number_Base_P.Text.LastIndexOf("-")))
+
+            // В исходном числе должен быть максимум 1 знак '-'
+            if (!num_Fail && (Number_Base_P.Text.IndexOf("-") != Number_Base_P.Text.LastIndexOf("-")))
             {
                 Data_Label.Text += "В исходном числе присутствует более чем один символ '-'. \n";
                 Number_Base_P_Error.Visible = true;
-                hit_num = true;
+                num_Fail = true;
             }
-            if (!hit_num && Number_Base_P.Text.IndexOf("-") != -1 && Number_Base_P.Text.IndexOf("-") != 0)
+
+            // В исходном числе знак '-' может стоять только на первой позиции
+            if (!num_Fail && Number_Base_P.Text.IndexOf("-") != -1 && Number_Base_P.Text.IndexOf("-") != 0)
             {
                 Data_Label.Text += "В исходном числе символ '-' стоит не на первой позиции. \n";
                 Number_Base_P_Error.Visible = true;
-                hit_num = true;
+                num_Fail = true;
             }
-            if (!hit_num)
+
+            // В исходном числе допустимы только символы: '-', 0..9, a..z, A..Z, '.', ','
+            if (!num_Fail)
             {
                 for (int i = 0; i < Number_Base_P.Text.Length; i++)
                 {
@@ -91,91 +100,102 @@ namespace WindowsFormsNumberTranslator
                         || Number_Base_P.Text[i] == '.' || Number_Base_P.Text[i] == ','
                         || (i == 0 && Number_Base_P.Text[i] == '-')))
                     {
-                        Data_Label.Text += "Неверный ввод исходного числа. Допустимые символы: -, 0..9, a..z, A..Z. \n";
+                        Data_Label.Text += "Неверный ввод исходного числа. Допустимые символы: '-', 0..9, a..z, A..Z, '.', ','. \n";
                         Number_Base_P_Error.Visible = true;
-                        hit_num = true;
+                        num_Fail = true;
                         break;
                     }
                 }
             }
-            if (!hit_num && (Number_Base_P.Text[0] == '.' || Number_Base_P.Text[0] == ','
+
+            // В исходном числе символ пунктуации не может стоять на первой или последней позиции
+            if (!num_Fail && (Number_Base_P.Text[0] == '.' || Number_Base_P.Text[0] == ','
                 || Number_Base_P.Text[Number_Base_P.Text.Length - 1] == '.'
                 || Number_Base_P.Text[Number_Base_P.Text.Length - 1] == ','))
             {
                 Data_Label.Text += "Исходное число начинается или заканчивается символом пунктуации. \n";
                 Number_Base_P_Error.Visible = true;
-                hit_num = true;
+                num_Fail = true;
             }
-            // Корректность оснований
+
+            // Основания и количество знаков после запятой должны приводиться к целому типу
             try
             {
                 int.Parse(Base_P.Text);
             }
             catch (Exception)
             {
-                if (!hit_P)
+                if (!P_Fail)
                 {
                     Data_Label.Text += "Исходное основание нельзя привести к целому типу. \n";
                     Base_P_Error.Visible = true;
-                    hit_P = true;
+                    P_Fail = true;
                 }
             }
+
             try
             {
                 int.Parse(Base_Q.Text);
             }
             catch (Exception)
             {
-                if (!hit_Q)
+                if (!Q_Fail)
                 {
                     Data_Label.Text += "Основание результата нельзя привести к целому типу. \n";
                     Base_Q_Error.Visible = true;
-                    hit_Q = true;
+                    Q_Fail = true;
                 }
             }
+
             try
             {
                 int.Parse(Accuracy.Text);
             }
             catch (Exception)
             {
-                if (!hit_acc)
+                if (!acc_Fail)
                 {
                     Data_Label.Text += "Количество знаков после запятой нельзя привести к целому типу. \n";
                     Accuracy_Error.Visible = true;
-                    hit_acc = true;
+                    acc_Fail = true;
                 }
             }
-            // Основания должны быть в этом промежутке
-            if (!hit_P && (int.Parse(Base_P.Text) <= 1 || int.Parse(Base_P.Text) > 36))
+
+            // Основания должны быть в промежутке от 2 до 36 включительно
+            if (!P_Fail && (int.Parse(Base_P.Text) <= 1 || int.Parse(Base_P.Text) > 36))
             {
                 Data_Label.Text += "Исходное основание должно быть в промежутке от 2 до 36 включительно. \n";
                 Base_P_Error.Visible = true;
-                hit_P = true;
+                P_Fail = true;
             }
-            if (!hit_Q && (int.Parse(Base_Q.Text) <= 1 || int.Parse(Base_Q.Text) > 36))
+
+            if (!Q_Fail && (int.Parse(Base_Q.Text) <= 1 || int.Parse(Base_Q.Text) > 36))
             {
                 Data_Label.Text += "Основание результата должно быть в промежутке от 2 до 36 включительно. \n";
                 Base_Q_Error.Visible = true;
-                hit_Q = true;
+                Q_Fail = true;
             }
-            if (!hit_acc && int.Parse(Accuracy.Text) < 0)
+
+            // Количество знаков после запятой должно быть не отрицательным
+            if (!acc_Fail && int.Parse(Accuracy.Text) < 0)
             {
                 Data_Label.Text += "Количество знаков после запятой должно быть не отрицательным. \n";
                 Accuracy_Error.Visible = true;
-                hit_acc = true;
+                acc_Fail = true;
             }
-            // В числе должен быть только один знак пунктуации
-            if (!hit_num && (Number_Base_P.Text.IndexOf(".") != Number_Base_P.Text.LastIndexOf(".") ||
+
+            // В исходном числе должен быть только один знак пунктуации
+            if (!num_Fail && (Number_Base_P.Text.IndexOf(".") != Number_Base_P.Text.LastIndexOf(".") ||
                 Number_Base_P.Text.IndexOf(",") != Number_Base_P.Text.LastIndexOf(",") || (
                 Number_Base_P.Text.IndexOf(".") > -1 && Number_Base_P.Text.LastIndexOf(",") > -1)))
             {
                 Data_Label.Text += "В исходном числе присутствует более чем один символ пунктуации. \n";
                 Number_Base_P_Error.Visible = true;
-                hit_num = true;
+                num_Fail = true;
             }
-            // Все цифры числа должны быть допустимыми в выбранной системе счисления
-            if (!hit_num && !hit_P)
+
+            // Все цифры числа исходного числа должны быть допустимыми в выбранной системе счисления
+            if (!num_Fail && !P_Fail)
             {
                 for (int i = 0; i < Number_Base_P.Text.Length; i++)
                 {
@@ -183,19 +203,20 @@ namespace WindowsFormsNumberTranslator
                     {
                         Data_Label.Text += $"В исходном числе присутствует цифра \"{Number_Base_P.Text[i]}\" недопустимая в системе счисления {Base_P.Text}. \n";
                         Number_Base_P_Error.Visible = true;
-                        hit_num = true;
+                        num_Fail = true;
                         break;
                     }
                 }
             }
-            // Все проверки прошли
-            if (!hit_num && !hit_P && !hit_Q && !hit_acc)
+
+            // Если все проверки прошли
+            if (!num_Fail && !P_Fail && !Q_Fail && !acc_Fail)
             {
                 // Наше число не может быть больше чем 2^63 - 1,иначе будет переполнение переменной 
                 try
                 {
                     string result = NumberTranslator.FromPtoQ(Number_Base_P.Text, int.Parse(Base_P.Text), int.Parse(Base_Q.Text), int.Parse(Accuracy.Text));
-                    Number_Base_Q.Text = result.Substring(0, Math.Min(50, result.Length));      // Чтобы результат не выходил за границы textbox
+                    Number_Base_Q.Text = result.Substring(0, Math.Min(50, result.Length));      // Чтобы результат не выходил за границы textBox
                 }
                 catch (Exception)
                 {
