@@ -16,17 +16,33 @@ namespace ClassLibraryNumberTranslator
         /// <returns> десятичное число </returns>
         public static string FromPto10Int(string number, int P)
         {
-            int degree = 0;
-            long result = 0;
-            checked // По дефолту overflow игнорируется, checked позволяет считать это за exception
+            // По дефолту overflow игнорируется, checked позволяет считать это за exception
+            checked
             {
-                for (int i = number.Length - 1; i >= 0; i--)
-                {
-                    result += CharToLong(number[i]) * (long)Math.Pow(P, degree);
-                    degree++;
-                }
+                return Gorner(number.ToCharArray(), P).ToString();
             }
-            return result.ToString();
+        }
+
+        /// <summary>
+        /// Алгоритм Горнера
+        /// </summary>
+        /// <param name="coef"> массив коэффициентов </param>
+        /// <param name="x"> заданное значение переменной </param>
+        /// <returns> значение многочлена </returns>
+        static double Gorner(char[] coef, double x)
+        {
+            // Создаём вспомогательный массив из coef.Length элементов, первый элемент - coef[0]
+            double[] res = new double[coef.Length];
+            res[0] = CharToLong(coef[0]);
+
+            // По схеме Горнера заполняем остальные элементы
+            for (int i = 1; i < res.Length; i++)
+            {
+                res[i] = x * res[i - 1] + CharToLong(coef[i]);
+            }
+
+            // Возвращаем последний элемент
+            return res[res.Length - 1];
         }
 
 
