@@ -58,15 +58,6 @@ namespace WindowsFormsNumberTranslator
                 Try_Translation();
             }
         }
-        /// <summary>
-        /// Перевод числа из системы с основанием P в систему с основанием Q
-        /// Пример: FromPtoQ("A.F", 16, 2, 10) => "1010.1111"; FromPtoQ("5.5", 10, 2, 10) => "101.1"
-        /// </summary>
-        /// <param name="number"> число </param>
-        /// <param name="P"> исходная система счисления </param>
-        /// <param name="Q"> нужная система счисления </param>
-        /// <param name="accuracy"> количество знаков после запятой </param>
-        /// <returns> число в системе с основанием Q </returns>
         string FromPtoQ(string number, int P, int Q, int accuracy)
         {
             string[] input = number.Split('.', ',');
@@ -97,7 +88,7 @@ namespace WindowsFormsNumberTranslator
             try
             {
                 string result = FromPtoQ(Number_Base_P.Text, int.Parse(Base_P.Text), int.Parse(Base_Q.Text), int.Parse(Accuracy.Text));
-                Number_Base_Q.Text = result.Substring(0, Math.Min(50, result.Length));      // Чтобы результат не выходил за границы textBox
+                Number_Base_Q.Text = result.Substring(0, Math.Min(58, result.Length));      // Чтобы результат не выходил за границы textBox
             }
             catch (Exception)
             {

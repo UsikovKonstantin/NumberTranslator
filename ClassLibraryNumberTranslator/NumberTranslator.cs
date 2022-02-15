@@ -29,17 +29,20 @@ namespace ClassLibraryNumberTranslator
         /// <param name="coef"> массив коэффициентов </param>
         /// <param name="x"> заданное значение переменной </param>
         /// <returns> значение многочлена </returns>
-        static double Gorner(char[] coef, long x)
+        static long Gorner(char[] coef, long x)
         {
             // Создаём вспомогательный массив из coef.Length элементов, первый элемент - coef[0]
             long[] res = new long[coef.Length];
             res[0] = CharToLong(coef[0]);
-
-            // По схеме Горнера заполняем остальные элементы
-            for (int i = 1; i < res.Length; i++)
+            checked
             {
-                res[i] = x * res[i - 1] + CharToLong(coef[i]);
+                // По схеме Горнера заполняем остальные элементы
+                for (int i = 1; i < res.Length; i++)
+                {
+                    res[i] = x * res[i - 1] + CharToLong(coef[i]);
+                }
             }
+
 
             // Возвращаем последний элемент
             return res[res.Length - 1];
@@ -138,6 +141,6 @@ namespace ClassLibraryNumberTranslator
         }
 
 
-        
+
     }
 }

@@ -55,7 +55,7 @@ namespace WindowsFormsNumberTranslator
             // 
             this.Number_Base_P.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
             this.Number_Base_P.Location = new System.Drawing.Point(24, 137);
-            this.Number_Base_P.MaxLength = 50;
+            this.Number_Base_P.MaxLength = 58;
             this.Number_Base_P.Name = "Number_Base_P";
             this.Number_Base_P.Size = new System.Drawing.Size(706, 32);
             this.Number_Base_P.TabIndex = 0;
