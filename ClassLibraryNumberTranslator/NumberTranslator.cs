@@ -29,10 +29,10 @@ namespace ClassLibraryNumberTranslator
         /// <param name="coef"> массив коэффициентов </param>
         /// <param name="x"> заданное значение переменной </param>
         /// <returns> значение многочлена </returns>
-        static double Gorner(char[] coef, double x)
+        static double Gorner(char[] coef, long x)
         {
             // Создаём вспомогательный массив из coef.Length элементов, первый элемент - coef[0]
-            double[] res = new double[coef.Length];
+            long[] res = new long[coef.Length];
             res[0] = CharToLong(coef[0]);
 
             // По схеме Горнера заполняем остальные элементы
@@ -138,37 +138,6 @@ namespace ClassLibraryNumberTranslator
         }
 
 
-        /// <summary>
-        /// Перевод числа из системы с основанием P в систему с основанием Q
-        /// Пример: FromPtoQ("A.F", 16, 2, 10) => "1010.1111"; FromPtoQ("5.5", 10, 2, 10) => "101.1"
-        /// </summary>
-        /// <param name="number"> число </param>
-        /// <param name="P"> исходная система счисления </param>
-        /// <param name="Q"> нужная система счисления </param>
-        /// <param name="accuracy"> количество знаков после запятой </param>
-        /// <returns> число в системе с основанием Q </returns>
-        public static string FromPtoQ(string number, int P, int Q, int accuracy)
-        {
-            string[] input = number.Split('.', ',');
-            string[] res = { "", "" };
-            if (input[0][0] == '-') // Для отрицательных чисел 
-            {
-                input[0] = input[0].Remove(0, 1);
-                res[0] += "-";
-            }
-            res[0] += From10toQInt(FromPto10Int(input[0], P), Q);
-
-            // Когда есть нецелая часть (дробная)
-            if (input.Length == 2 && accuracy != 0 && double.Parse(FromPto10Frac(input[1], P)) != 0) 
-            {
-                res[1] = From10toQFrac(FromPto10Frac(input[1], P), Q, accuracy);
-                if (res[1] == "")      // на случай, если дробная часть введённого числа очень близка к единице (1,9999..)
-                {
-                    return $"{res[0]}.({LongToChar(Q - 1)})";
-                }
-                return $"{res[0]}.{res[1]}";
-            }
-            return $"{res[0]}";
-        }
+        
     }
 }
