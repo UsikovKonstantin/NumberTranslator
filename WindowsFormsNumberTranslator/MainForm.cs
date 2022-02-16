@@ -321,11 +321,11 @@ namespace WindowsFormsNumberTranslator
             {
                 num_Fail = Negative_count_Check();
             }
-            
-            // В исходном числе допустимы только символы: '-', 0..9, a..z, A..Z, '.', ','
+
+            // В исходном числе знак '-' может стоять только на первой позиции
             if (!num_Fail)
             {
-                num_Fail = Symbol_Validity_Check();
+                num_Fail = Negative_Check();
             }
 
             // В исходном числе символ пунктуации не может стоять на первой или последней позиции
@@ -333,19 +333,19 @@ namespace WindowsFormsNumberTranslator
             {
                 num_Fail = Punctuation_Place_Check();
             }
-            
-            // В исходном числе знак '-' может стоять только на первой позиции
-            if (!num_Fail)
-            {
-                num_Fail = Negative_Check();
-            }
 
             // В исходном числе должен быть только один знак пунктуации
             if (!num_Fail)
             {
                 num_Fail = Punctuation_Check();
             }
-            
+
+            // В исходном числе допустимы только символы: '-', 0..9, a..z, A..Z, '.', ','
+            if (!num_Fail)
+            {
+                num_Fail = Symbol_Validity_Check();
+            }
+
             // Все цифры числа исходного числа должны быть допустимыми в выбранной системе счисления
             if (!num_Fail && !P_Fail)
             {
@@ -359,17 +359,19 @@ namespace WindowsFormsNumberTranslator
         {
             // Введено ли что либо в поле текста?
             bool P_Fail = P_Base_Entered_Check();
-            // Основания должны быть в промежутке от 2 до 36 включительно
-            if (!P_Fail)
-            {
-                P_Fail = P_base_Size_Check();
-            }
 
             // Основания и количество знаков после запятой должны приводиться к целому типу
             if (!P_Fail)
             {
                 P_Fail = P_base_Validity_Check();
             }
+
+            // Основания должны быть в промежутке от 2 до 36 включительно
+            if (!P_Fail)
+            {
+                P_Fail = P_base_Size_Check();
+            }
+            
             return P_Fail;
         }
 
@@ -378,17 +380,18 @@ namespace WindowsFormsNumberTranslator
             // Введено ли что либо в поле текста?
             bool Q_Fail = Q_Base_entered_Check();
 
-            // Основания должны быть в промежутке от 2 до 36 включительно
-            if (!Q_Fail)
-            {
-                Q_Fail = Q_base_Validity_Check();
-            }
-
             // Основания и количество знаков после запятой должны приводиться к целому типу
             if (!Q_Fail)
             {
                 Q_Fail = Q_base_Size_Check();
             }
+
+            // Основания должны быть в промежутке от 2 до 36 включительно
+            if (!Q_Fail)
+            {
+                Q_Fail = Q_base_Validity_Check();
+            }
+            
             return Q_Fail;
         }
 
