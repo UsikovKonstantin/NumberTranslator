@@ -19,9 +19,10 @@ namespace ClassLibraryNumberTranslator
             // По дефолту overflow игнорируется, checked позволяет считать это за exception
             checked
             {
-                return Gorner(number.ToCharArray(), P).ToString();
+                return GornerInt(number.ToCharArray(), P).ToString();
             }
         }
+
 
         /// <summary>
         /// Алгоритм Горнера
@@ -29,23 +30,17 @@ namespace ClassLibraryNumberTranslator
         /// <param name="coef"> массив коэффициентов </param>
         /// <param name="x"> заданное значение переменной </param>
         /// <returns> значение многочлена </returns>
-        static long Gorner(char[] coef, long x)
+        static long GornerInt(char[] coef, long x)
         {
-            // Создаём вспомогательный массив из coef.Length элементов, первый элемент - coef[0]
-            long[] res = new long[coef.Length];
-            res[0] = CharToLong(coef[0]);
+            long result = CharToLong(coef[0]);
             checked
             {
-                // По схеме Горнера заполняем остальные элементы
-                for (int i = 1; i < res.Length; i++)
+                for (int i = 1; i < coef.Length; i++)
                 {
-                    res[i] = x * res[i - 1] + CharToLong(coef[i]);
+                    result = result * x + CharToLong(coef[i]);
                 }
             }
-
-
-            // Возвращаем последний элемент
-            return res[res.Length - 1];
+            return result;
         }
 
 
@@ -82,14 +77,28 @@ namespace ClassLibraryNumberTranslator
         /// <returns> десятичное число </returns>
         public static string FromPto10Frac(string number, int P)
         {
-            int degree = 0;
-            double result = 0;
-            for (int i = 0; i < number.Length; i++)
+            return GornerFrac(number.ToCharArray(), P).ToString();
+        }
+
+
+        /// <summary>
+        /// Алгоритм Горнера для вещественной части
+        /// </summary>
+        /// <param name="coef"> массив коэффициентов </param>
+        /// <param name="x"> заданное значение переменной </param>
+        /// <returns> значение многочлена </returns>
+        static double GornerFrac(char[] coef, long x)
+        {
+            Array.Reverse(coef);
+            Array.Resize(ref coef, coef.Length + 1);
+            coef[coef.Length - 1] = '0';
+
+            double result = CharToLong(coef[0]);
+            for (int i = 1; i < coef.Length; i++)
             {
-                degree--;
-                result += CharToLong(number[i]) * Math.Pow(P, degree);
+                result = result / x + CharToLong(coef[i]);
             }
-            return result.ToString();
+            return result;
         }
 
 
