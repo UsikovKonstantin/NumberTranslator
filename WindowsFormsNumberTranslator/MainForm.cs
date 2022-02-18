@@ -36,17 +36,22 @@ namespace WindowsFormsNumberTranslator
             At_Change();
         }
 
+        #region Main Region
+
         void At_Change()
         {
+            // Зануление выводов
             Data_Label.Text = "";
             Number_Base_Q.Text = "";
+
+            // Выключение подсветки ошибочного ввода
             Base_P_Error.Visible = false;
             Base_Q_Error.Visible = false;
             Number_Base_P_Error.Visible = false;
             Accuracy_Error.Visible = false;
 
             // Эти переменные нужны чтобы в вывод не попадало конфликтующих, неверных и других противоречащих утверждний
-            bool num_Fail = false, P_Fail = false, Q_Fail = false, acc_Fail = false;
+            bool num_Fail, P_Fail, Q_Fail, acc_Fail;
             P_Fail = P_Base_Checks();
             num_Fail = Number_Base_P_Checks(P_Fail);
             Q_Fail = Q_Base_Checks();
@@ -67,7 +72,7 @@ namespace WindowsFormsNumberTranslator
                 string result = FromPtoQ(Number_Base_P.Text, int.Parse(Base_P.Text), int.Parse(Base_Q.Text), int.Parse(Accuracy.Text));
                 Number_Base_Q.Text = result.Substring(0, Math.Min(58, result.Length));      // Чтобы результат не выходил за границы textBox
             }
-            catch (Exception)
+            catch (OverflowException)
             {
                 Data_Label.Text += "Целая часть числа вызвала переполнение. \n";
                 Number_Base_P_Error.Visible = true;
@@ -77,29 +82,39 @@ namespace WindowsFormsNumberTranslator
         string FromPtoQ(string number, int P, int Q, int accuracy)
         {
             string[] input = number.Split('.', ',');
-            string[] res = { "", "" };
+            string Temp;
+            string Output = "";
             if (input[0][0] == '-') // Для отрицательных чисел 
             {
                 input[0] = input[0].Remove(0, 1);
-                res[0] += "-";
+                Output += "-";
             }
-            res[0] += NumberTranslator.From10toQInt(NumberTranslator.FromPto10Int(input[0], P), Q);
-
-            // Когда есть нецелая часть (дробная)
-            if (input.Length == 2 && accuracy != 0 && double.Parse(NumberTranslator.FromPto10Frac(input[1], P)) != 0)
+            if (input[0] == "")
             {
-                res[1] = NumberTranslator.From10toQFrac(NumberTranslator.FromPto10Frac(input[1], P), Q, accuracy);
-                if (res[1] == "")      // на случай, если дробная часть введённого числа очень близка к единице (1,9999..)
-                {
-                    return $"{res[0]}.({NumberTranslator.LongToChar(Q - 1)})";
-                }
-                return $"{res[0]}.{res[1]}";
+                return "";
             }
-            return $"{res[0]}";
+            Output += NumberTranslator.From10toQInt(NumberTranslator.FromPto10Int(input[0], P), Q);
+            if (input.Length == 2 && accuracy != 0) // Когда есть нецелая часть (дробная)
+            {
+                Temp = NumberTranslator.FromPto10Frac(input[1], P);
+                if (double.Parse(Temp) != 0)
+                {
+                    Temp = NumberTranslator.From10toQFrac(Temp, Q, accuracy);
+                    if (Temp == "")      // на случай, если дробная часть введённого числа очень близка к единице (1,9999..)
+                    {
+                        Output += "." + $"({ NumberTranslator.LongToChar(Q - 1)})";
+                    }
+                    else
+                    {
+                        Output += $".{Temp}";
+                    }
+                }
+            }
+            return Output;
         }
+        #endregion
 
-
-        #region Number_Base_P_Checks
+        #region Number Base P Checks
 
         bool Number_Base_P_Checks(bool P_Fail)
         {
@@ -130,13 +145,20 @@ namespace WindowsFormsNumberTranslator
                 num_Fail = Number_Base_P_HasMoreThanOnePunctuationMark_Check();
             }
 
+            // За минусом не может следовать знак пунктуации
+
+            if (!num_Fail)
+            {
+                num_Fail = Number_Base_P_Punctuation_After_Minus();
+            }
+
             // В исходном числе допустимы только символы: '-', 0..9, a..z, A..Z, '.', ','
             if (!num_Fail)
             {
                 num_Fail = Number_Base_P_SymbolValidity_Check();
             }
 
-            // Все цифры числа исходного числа должны быть допустимыми в выбранной системе счисления
+            // Все цифры исходного числа должны быть допустимыми в выбранной системе счисления
             if (!num_Fail && !P_Fail)
             {
                 num_Fail = Number_Base_P_SomeNumberDoNotExist_Check();
@@ -150,6 +172,7 @@ namespace WindowsFormsNumberTranslator
             if (Number_Base_P.Text == "")
             {
                 Data_Label.Text += "Введите исходное число. \n";
+                Number_Base_P_Error.Visible = true;
                 return true;
             }
 
@@ -208,6 +231,17 @@ namespace WindowsFormsNumberTranslator
             return false;
         }
 
+        bool Number_Base_P_Punctuation_After_Minus()
+        {
+            if (Number_Base_P.Text[0] == '-' && (Number_Base_P.Text[1] == '.' || Number_Base_P.Text[1] == ','))
+            {
+                Data_Label.Text += "За минусом не может следовать знак пунктуации. \n";
+                Number_Base_P_Error.Visible = true;
+                return true;
+            }
+            return false;
+        }
+
         bool Number_Base_P_SymbolValidity_Check()
         {
             for (int i = 0; i < Number_Base_P.Text.Length; i++)
@@ -244,26 +278,25 @@ namespace WindowsFormsNumberTranslator
 
         #endregion
 
-
-        #region P_Base_Checks
+        #region P Base Checks
 
         bool P_Base_Checks()
         {
             // Введено ли что либо в поле текста?
             bool P_Fail = P_Base_IsEmpty_Check();
 
-            // Основания и количество знаков после запятой должны приводиться к целому типу
+            // Основание должно приводиться к целому типу
             if (!P_Fail)
             {
                 P_Fail = P_base_IsNotConvertableToInt_Check();
             }
 
-            // Основания должны быть в промежутке от 2 до 36 включительно
+            // Основание должно быть в промежутке от 2 до 36 включительно
             if (!P_Fail)
             {
                 P_Fail = P_base_Interval_Check();
             }
-            
+
             return P_Fail;
         }
 
@@ -272,6 +305,7 @@ namespace WindowsFormsNumberTranslator
             if (Base_P.Text == "")
             {
                 Data_Label.Text += "Введите исходное основание. \n";
+                Base_P_Error.Visible = true;
                 return true;
             }
 
@@ -308,26 +342,25 @@ namespace WindowsFormsNumberTranslator
 
         #endregion
 
-
-        #region Q_Base_Checks
+        #region Q Base Checks
 
         bool Q_Base_Checks()
         {
             // Введено ли что либо в поле текста?
             bool Q_Fail = Q_Base_IsEmpty_Check();
 
-            // Основания и количество знаков после запятой должны приводиться к целому типу
+            // Основание должно быть в промежутке от 2 до 36 включительно
+            if (!Q_Fail)
+            {
+                Q_Fail = Q_base_IsNotConvertableToInt_Check();
+            }
+
+            // Основание должно приводиться к целому типу
             if (!Q_Fail)
             {
                 Q_Fail = Q_base_Interval_Check();
             }
 
-            // Основания должны быть в промежутке от 2 до 36 включительно
-            if (!Q_Fail)
-            {
-                Q_Fail = Q_base_IsNotConvertableToInt_Check();
-            }
-            
             return Q_Fail;
         }
 
@@ -336,6 +369,7 @@ namespace WindowsFormsNumberTranslator
             if (Base_Q.Text == "")
             {
                 Data_Label.Text += "Введите основание результата. \n";
+                Base_Q_Error.Visible = true;
                 return true;
             }
 
@@ -372,8 +406,7 @@ namespace WindowsFormsNumberTranslator
 
         #endregion
 
-
-        #region Accuracy_Checks
+        #region Accuracy Checks
 
         bool Accuracy_Checks()
         {
@@ -391,7 +424,7 @@ namespace WindowsFormsNumberTranslator
             {
                 acc_Fail = Accuracy_IsNegative_Check();
             }
-            
+
             return acc_Fail;
         }
 
@@ -400,6 +433,7 @@ namespace WindowsFormsNumberTranslator
             if (Accuracy.Text == "")
             {
                 Data_Label.Text += "Введите количество знаков после запятой. \n";
+                Accuracy_Error.Visible = true;
                 return true;
             }
 
