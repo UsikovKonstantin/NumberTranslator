@@ -233,7 +233,7 @@ namespace WindowsFormsNumberTranslator
 
         bool Number_Base_P_Punctuation_After_Minus()
         {
-            if (Number_Base_P.Text[0] == '-' && (Number_Base_P.Text[1] == '.' || Number_Base_P.Text[1] == ','))
+            if (Number_Base_P.Text.Length > 1 && (Number_Base_P.Text[0] == '-' && (Number_Base_P.Text[1] == '.' || Number_Base_P.Text[1] == ',')))
             {
                 Data_Label.Text += "За минусом не может следовать знак пунктуации. \n";
                 Number_Base_P_Error.Visible = true;
