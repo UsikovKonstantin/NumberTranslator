@@ -183,7 +183,6 @@ namespace WindowsFormsNumberTranslator
             this.Base_P_Error.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.Base_P_Error.TabIndex = 18;
             this.Base_P_Error.TabStop = false;
-            this.Base_P_Error.Visible = false;
             // 
             // Accuracy_Error
             // 
@@ -194,7 +193,6 @@ namespace WindowsFormsNumberTranslator
             this.Accuracy_Error.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.Accuracy_Error.TabIndex = 17;
             this.Accuracy_Error.TabStop = false;
-            this.Accuracy_Error.Visible = false;
             // 
             // Number_Base_P_Error
             // 
@@ -205,7 +203,6 @@ namespace WindowsFormsNumberTranslator
             this.Number_Base_P_Error.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.Number_Base_P_Error.TabIndex = 16;
             this.Number_Base_P_Error.TabStop = false;
-            this.Number_Base_P_Error.Visible = false;
             // 
             // Base_Q_Error
             // 
@@ -216,7 +213,6 @@ namespace WindowsFormsNumberTranslator
             this.Base_Q_Error.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.Base_Q_Error.TabIndex = 15;
             this.Base_Q_Error.TabStop = false;
-            this.Base_Q_Error.Visible = false;
             // 
             // MainForm
             // 

@@ -51,11 +51,10 @@ namespace WindowsFormsNumberTranslator
             Accuracy_Error.Visible = false;
 
             // Эти переменные нужны чтобы в вывод не попадало конфликтующих, неверных и других противоречащих утверждний
-            bool num_Fail, P_Fail, Q_Fail, acc_Fail;
-            P_Fail = P_Base_Checks();
-            num_Fail = Number_Base_P_Checks(P_Fail);
-            Q_Fail = Q_Base_Checks();
-            acc_Fail = Accuracy_Checks();
+            bool P_Fail = P_Base_Checks();
+            bool num_Fail = Number_Base_P_Checks(P_Fail);
+            bool Q_Fail = Q_Base_Checks();
+            bool acc_Fail = Accuracy_Checks();
 
             // Если все проверки прошли
             if (!num_Fail && !P_Fail && !Q_Fail && !acc_Fail)
