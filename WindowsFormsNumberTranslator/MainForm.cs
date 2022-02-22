@@ -73,7 +73,7 @@ namespace WindowsFormsNumberTranslator
                 if (isminus()) // Для отрицательных чисел 
                 {
                     result += "-";
-                    input[0].Remove(0, 1);
+                    input[0] = input[0].Remove(0, 1);
                 }
                 if (input[0] == "")
                 {
