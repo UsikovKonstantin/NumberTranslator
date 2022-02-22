@@ -249,7 +249,7 @@ namespace WindowsFormsNumberTranslator
                     || (v >= 'A' && v <= 'Z')
                     || (v >= 'a' && v <= 'z')
                     || v == '.' || v == ','
-                    || (v == '-')))
+                    || v == '-'))
                 {
                     Data_Label.Text += "Неверный ввод исходного числа. Допустимые символы: '-', 0..9, a..z, A..Z, '.', ','. \n";
                     Number_Base_P_Error.Visible = true;
