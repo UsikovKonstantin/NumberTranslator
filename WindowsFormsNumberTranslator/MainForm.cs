@@ -68,7 +68,27 @@ namespace WindowsFormsNumberTranslator
             // Наше число не может быть больше чем 2^63 - 1,иначе будет переполнение переменной 
             try
             {
-                string result = FromPtoQ(Number_Base_P.Text, int.Parse(Base_P.Text), int.Parse(Base_Q.Text), int.Parse(Accuracy.Text));
+                string[] input = Number_Base_P.Text.Split('.', ',');
+                string result = "";
+                if (isminus()) // Для отрицательных чисел 
+                {
+                    result += "-";
+                    input[0].Remove(0, 1);
+                }
+                if (input[0] == "")
+                {
+                    Number_Base_Q.Text = "";
+                    return;
+                }
+                result += NumberTranslator.FromPtoQInt(input[0], int.Parse(Base_P.Text), int.Parse(Base_Q.Text));
+                if (input.Length == 2 && int.Parse(Accuracy.Text) != 0 && double.Parse(input[1]) != 0) // Когда есть нецелая часть (дробная)
+                {
+                    result += $".{NumberTranslator.FromPtoQFrac(input[1], int.Parse(Base_P.Text), int.Parse(Base_Q.Text), int.Parse(Accuracy.Text))}";
+                    if (result.Split('.')[1] == "")
+                    {
+                        result = result.Remove(result.Length - 2, 1);
+                    }
+                }
                 Number_Base_Q.Text = result.Substring(0, Math.Min(58, result.Length));      // Чтобы результат не выходил за границы textBox
             }
             catch (OverflowException)
@@ -77,39 +97,13 @@ namespace WindowsFormsNumberTranslator
                 Number_Base_P_Error.Visible = true;
             }
         }
-
-        string FromPtoQ(string number, int P, int Q, int accuracy)
+        bool isminus()
         {
-            string[] input = number.Split('.', ',');
-            string Temp;
-            string Output = "";
-            if (input[0][0] == '-') // Для отрицательных чисел 
+            if (Number_Base_P.Text[0] == '-')
             {
-                input[0] = input[0].Remove(0, 1);
-                Output += "-";
+                return true;
             }
-            if (input[0] == "")
-            {
-                return "";
-            }
-            Output += NumberTranslator.From10toQInt(NumberTranslator.FromPto10Int(input[0], P), Q);
-            if (input.Length == 2 && accuracy != 0) // Когда есть нецелая часть (дробная)
-            {
-                Temp = NumberTranslator.FromPto10Frac(input[1], P);
-                if (double.Parse(Temp) != 0)
-                {
-                    Temp = NumberTranslator.From10toQFrac(Temp, Q, accuracy);
-                    if (Temp == "")      // на случай, если дробная часть введённого числа очень близка к единице (1,9999..)
-                    {
-                        Output += "." + $"({ NumberTranslator.LongToChar(Q - 1)})";
-                    }
-                    else
-                    {
-                        Output += $".{Temp}";
-                    }
-                }
-            }
-            return Output;
+            return false;
         }
         #endregion
 

@@ -149,7 +149,29 @@ namespace ClassLibraryNumberTranslator
             return n < 10 ? (char)(n + 48) : (char)(n + 55);
         }
 
+        /// <summary>
+        /// Перевод целой части числа
+        /// </summary>
+        /// <param name="number"> целая часть </param>
+        /// <param name="P"> исходное основание </param>
+        /// <param name="Q"> нужное основание </param>
+        /// <returns> переведённая целая часть </returns>
+        public static string FromPtoQInt(string number, int P, int Q)
+        {
+            return From10toQInt(FromPto10Int(number, P), Q);
+        }
 
-
+        /// <summary>
+        /// Перевод дробной части числа
+        /// </summary>
+        /// <param name="number"> дробная часть </param>
+        /// <param name="P"> исходное основание </param>
+        /// <param name="Q"> нужное основание </param>
+        /// <param name="acc"> количество знаков после запятой </param>
+        /// <returns> переведённая дробная часть </returns>
+        public static string FromPtoQFrac(string number, int P, int Q, int acc)
+        {
+            return From10toQFrac(FromPto10Frac(number, P), Q, acc);
+        }
     }
 }

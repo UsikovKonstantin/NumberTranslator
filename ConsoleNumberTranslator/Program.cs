@@ -47,6 +47,19 @@ namespace ConsoleNumberTranslator
             Debug.Assert(NumberTranslator.From10toQFrac("0.671875", 8,10) == "53");
             Console.WriteLine("Tests for From10toQFrac passed.");
         }
+        
+        static void FromPtoQInt_Test()
+        {
+            Debug.Assert(NumberTranslator.FromPtoQInt("101001", 2, 16) == "29");
+            Debug.Assert(NumberTranslator.FromPtoQInt("1101", 2, 16) == "D");
+            Console.WriteLine("Tests for FromPtoQInt passed.");
+        }
+
+        static void FromPtoQFrac()
+        {
+            Debug.Assert(NumberTranslator.FromPtoQInt("101001", 2, 16) == "29");
+            Console.WriteLine("Tests for FromPtoQFrac passed.");
+        }
 
         static void CharToLong_Test()
         {
@@ -64,5 +77,7 @@ namespace ConsoleNumberTranslator
             Debug.Assert(NumberTranslator.LongToChar(4) == '4');
             Console.WriteLine("Tests for LongToChar passed.");
         }
+
+        static
     }
 }
