@@ -243,20 +243,19 @@ namespace WindowsFormsNumberTranslator
 
         bool Number_Base_P_SymbolValidity_Check()
         {
-            for (int i = 0; i < Number_Base_P.Text.Length; i++)
+            foreach (char v in Number_Base_P.Text)
             {
-                if (!(char.IsNumber(Number_Base_P.Text[i])
-                    || (Number_Base_P.Text[i] >= 'A' && Number_Base_P.Text[i] <= 'Z')
-                    || (Number_Base_P.Text[i] >= 'a' && Number_Base_P.Text[i] <= 'z')
-                    || Number_Base_P.Text[i] == '.' || Number_Base_P.Text[i] == ','
-                    || (i == 0 && Number_Base_P.Text[i] == '-')))
+                if (!(char.IsNumber(v)
+                    || (v >= 'A' && v <= 'Z')
+                    || (v >= 'a' && v <= 'z')
+                    || v == '.' || v == ','
+                    || (v == '-')))
                 {
                     Data_Label.Text += "Неверный ввод исходного числа. Допустимые символы: '-', 0..9, a..z, A..Z, '.', ','. \n";
                     Number_Base_P_Error.Visible = true;
                     return true;
                 }
             }
-
             return false;
         }
 
