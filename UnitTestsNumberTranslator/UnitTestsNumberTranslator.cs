@@ -54,5 +54,13 @@ namespace UnitTestsNumberTranslator {
             bool test4 =(NumberTranslator.CharToLong('4') == 4);
             Assert.IsTrue(test1 && test2 && test3 && test4);
         }
+
+        [TestMethod]
+        public void LongToChar_ReturnsStringNum() {
+            bool test1 =(NumberTranslator.LongToChar(15) == 'F');
+            bool test2 =(NumberTranslator.LongToChar(35) == 'Z');
+            bool test3 =(NumberTranslator.LongToChar(4) == '4');
+            Assert.IsTrue(test1 && test2 && test3);
+        }
     }
 }
