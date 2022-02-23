@@ -8,7 +8,6 @@ namespace ConsoleNumberTranslator
     {
         static void Main()
         {
-            Console.WriteLine("1");
             Console.WriteLine("Test");
             FromPto10Int_Test();
             From10toQInt_Test();
