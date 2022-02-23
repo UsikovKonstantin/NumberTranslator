@@ -4,7 +4,7 @@ using ClassLibraryNumberTranslator;
 
 namespace ConsoleNumberTranslator
 {
-    class Program
+    class ConsoleTesting
     {
         static void Main()
         {
@@ -13,6 +13,8 @@ namespace ConsoleNumberTranslator
             From10toQInt_Test();
             FromPto10Frac_Test();
             From10toQFrac_Test();
+            FromPtoQInt_Test();
+            FromPtoQFrac_Test();
             CharToLong_Test();
             LongToChar_Test();
             Console.WriteLine("All tests passed.");
@@ -36,15 +38,15 @@ namespace ConsoleNumberTranslator
 
         static void FromPto10Frac_Test()
         {
-            Debug.Assert(NumberTranslator.FromPto10Frac("1101", 2) == "0.8125");
-            Debug.Assert(NumberTranslator.FromPto10Frac("53", 8) == "0.671875");
+            Debug.Assert(NumberTranslator.FromPto10Frac("1101", 2) == "0,8125");
+            Debug.Assert(NumberTranslator.FromPto10Frac("53", 8) == "0,671875");
             Console.WriteLine("Tests for FromPto10Frac passed.");
         }
 
         static void From10toQFrac_Test()
         {
-            Debug.Assert(NumberTranslator.From10toQFrac("0.8125", 2,10) == "1101");
-            Debug.Assert(NumberTranslator.From10toQFrac("0.671875", 8,10) == "53");
+            Debug.Assert(NumberTranslator.From10toQFrac("0,8125", 2,10) == "1101");
+            Debug.Assert(NumberTranslator.From10toQFrac("0,671875", 8,10) == "53");
             Console.WriteLine("Tests for From10toQFrac passed.");
         }
         
@@ -55,7 +57,7 @@ namespace ConsoleNumberTranslator
             Console.WriteLine("Tests for FromPtoQInt passed.");
         }
 
-        static void FromPtoQFrac()
+        static void FromPtoQFrac_Test()
         {
             Debug.Assert(NumberTranslator.FromPtoQInt("101001", 2, 16) == "29");
             Console.WriteLine("Tests for FromPtoQFrac passed.");
@@ -78,6 +80,5 @@ namespace ConsoleNumberTranslator
             Console.WriteLine("Tests for LongToChar passed.");
         }
 
-        static
     }
 }
