@@ -38,5 +38,12 @@ namespace UnitTestsNumberTranslator {
             bool test2 = NumberTranslator.FromPtoQInt("1101", 2, 16) == "D";
             Assert.IsTrue(test1 && test2);
         }
+
+        [TestMethod]
+        public void FromPtoQFrac_ReturnsFracNumInBaseQ() {
+            bool test1 = NumberTranslator.FromPtoQInt("101001", 2, 16) == "29";
+            bool test2 = NumberTranslator.FromPtoQInt("1101", 2, 16) == "D";
+            Assert.IsTrue(test1 && test2);
+        }
     }
 }
