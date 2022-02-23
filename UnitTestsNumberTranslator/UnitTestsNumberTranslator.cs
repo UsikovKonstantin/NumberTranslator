@@ -18,15 +18,24 @@ namespace UnitTestsNumberTranslator {
             Assert.IsTrue(test1 && test2);
         }
 
+        [TestMethod]
         public void FromPto10Frac_ReturnFracNumberInBase10() {
             bool test1 = NumberTranslator.FromPto10Frac("1101", 2) == "0,8125";
             bool test2 = NumberTranslator.FromPto10Frac("53", 8) == "0,671875";
             Assert.IsTrue(test1 && test2);
         }
 
+        [TestMethod]
         public void From10toQFrac_ReturnsFracNumberInBaseQ() {
             bool test1 = NumberTranslator.From10toQFrac("0,8125", 2, 10) == "1101";
             bool test2 = NumberTranslator.From10toQFrac("0,671875", 8, 10) == "53";
+            Assert.IsTrue(test1 && test2);
+        }
+
+        [TestMethod]
+        public void FromPtoQInt_ReturnsIntNumInBaseQ() {
+            bool test1 = NumberTranslator.FromPtoQInt("101001", 2, 16) == "29";
+            bool test2 = NumberTranslator.FromPtoQInt("1101", 2, 16) == "D";
             Assert.IsTrue(test1 && test2);
         }
     }
