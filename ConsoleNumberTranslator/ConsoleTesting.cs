@@ -59,8 +59,8 @@ namespace ConsoleNumberTranslator
 
         static void FromPtoQFrac_Test()
         {
-            Debug.Assert(NumberTranslator.FromPtoQInt("101001", 2, 16) == "29");
-            Debug.Assert(NumberTranslator.FromPtoQInt("1101", 2, 16) == "D");
+            Debug.Assert(NumberTranslator.FromPtoQFrac("321312", 10, 8, 6) == "244406");
+            Debug.Assert(NumberTranslator.FromPtoQFrac("123214", 8, 6, 6) == "055044");
             Console.WriteLine("Tests for FromPtoQFrac passed.");
         }
 
