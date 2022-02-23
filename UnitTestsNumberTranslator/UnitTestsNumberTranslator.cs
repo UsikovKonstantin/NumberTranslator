@@ -17,5 +17,11 @@ namespace UnitTestsNumberTranslator {
             bool test2 = NumberTranslator.From10toQInt("2", 2) == "10";
             Assert.IsTrue(test1 && test2);
         }
+
+        public void FromPto10Frac_ReturnFracNumberInBase10() {
+            bool test1 = NumberTranslator.FromPto10Frac("1101", 2) == "0,8125";
+            bool test2 = NumberTranslator.FromPto10Frac("53", 8) == "0,671875";
+            Assert.IsTrue(test1 && test2);
+        }
     }
 }
