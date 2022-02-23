@@ -45,5 +45,14 @@ namespace UnitTestsNumberTranslator {
             bool test2 = NumberTranslator.FromPtoQInt("1101", 2, 16) == "D";
             Assert.IsTrue(test1 && test2);
         }
+
+        [TestMethod]
+        public void CharToLong_ReturnsLongNum() {
+            bool test1 =(NumberTranslator.CharToLong('F') == 15);
+            bool test2 =(NumberTranslator.CharToLong('f') == 15);
+            bool test3 =(NumberTranslator.CharToLong('Z') == 35);
+            bool test4 =(NumberTranslator.CharToLong('4') == 4);
+            Assert.IsTrue(test1 && test2 && test3 && test4);
+        }
     }
 }
