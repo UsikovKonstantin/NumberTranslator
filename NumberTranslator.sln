@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsNumberTranslato
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassLibraryNumberTranslator", "ClassLibraryNumberTranslator\ClassLibraryNumberTranslator.csproj", "{6FB081B6-22FE-42A2-BD65-3B823AA2827E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestsNumberTranslator", "UnitTestsNumberTranslator\UnitTestsNumberTranslator.csproj", "{2BF6D88F-1C9E-4E89-9C2F-131BABB49BFC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{6FB081B6-22FE-42A2-BD65-3B823AA2827E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6FB081B6-22FE-42A2-BD65-3B823AA2827E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6FB081B6-22FE-42A2-BD65-3B823AA2827E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BF6D88F-1C9E-4E89-9C2F-131BABB49BFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BF6D88F-1C9E-4E89-9C2F-131BABB49BFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BF6D88F-1C9E-4E89-9C2F-131BABB49BFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BF6D88F-1C9E-4E89-9C2F-131BABB49BFC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
