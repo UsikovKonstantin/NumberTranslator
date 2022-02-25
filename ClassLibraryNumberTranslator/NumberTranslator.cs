@@ -146,6 +146,10 @@ namespace ClassLibraryNumberTranslator
         /// </summary>
         /// <param name="n"> число </param>
         /// <returns> символ </returns>
+        public static char FromIntToChar (int n)
+        {
+            return digits[n];
+        }
        
 
         /// <summary>
