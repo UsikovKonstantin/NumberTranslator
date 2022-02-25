@@ -55,14 +55,14 @@ namespace ClassLibraryNumberTranslator
         public static string From10toQInt(string number, int Q)
         {
             string result = "";
-            int x = int.Parse(number);
+            long x = long.Parse(number);
             if (x == 0)
             {
                 result = "0";
             }
             while (x > 0)
             {
-                result = FromIntToChar(x % Q) + result;
+                result = FromIntToChar((int)(x % Q)) + result;
                 x /= Q;
             }
             return result;
