@@ -66,18 +66,18 @@ namespace ConsoleNumberTranslator
 
         static void CharToLong_Test()
         {
-            Debug.Assert(NumberTranslator.CharToLong('F') == 15);
-            Debug.Assert(NumberTranslator.CharToLong('f') == 15);
-            Debug.Assert(NumberTranslator.CharToLong('Z') == 35);
-            Debug.Assert(NumberTranslator.CharToLong('4') == 4);
+            Debug.Assert(NumberTranslator.FromCharToInt('F') == 15);
+            Debug.Assert(NumberTranslator.FromCharToInt('f') == 15);
+            Debug.Assert(NumberTranslator.FromCharToInt('Z') == 35);
+            Debug.Assert(NumberTranslator.FromCharToInt('4') == 4);
             Console.WriteLine("Tests for CharToLong passed.");
         }
 
         static void LongToChar_Test()
         {
-            Debug.Assert(NumberTranslator.LongToChar(15) == 'F');
-            Debug.Assert(NumberTranslator.LongToChar(35) == 'Z');
-            Debug.Assert(NumberTranslator.LongToChar(4) == '4');
+            Debug.Assert(NumberTranslator.FromIntToChar(15) == 'F');
+            Debug.Assert(NumberTranslator.FromIntToChar(35) == 'Z');
+            Debug.Assert(NumberTranslator.FromIntToChar(4) == '4');
             Console.WriteLine("Tests for LongToChar passed.");
         }
 

@@ -33,12 +33,12 @@ namespace ClassLibraryNumberTranslator
         /// <returns> значение многочлена </returns>
         static long GornerInt(char[] coef, long x)
         {
-            long result = CharToLong(coef[0]);
+            long result = FromCharToInt(coef[0]);
             checked
             {
                 for (int i = 1; i < coef.Length; i++)
                 {
-                    result = result * x + CharToLong(coef[i]);
+                    result = result * x + FromCharToInt(coef[i]);
                 }
             }
             return result;
@@ -55,14 +55,14 @@ namespace ClassLibraryNumberTranslator
         public static string From10toQInt(string number, int Q)
         {
             string result = "";
-            long x = long.Parse(number);
+            int x = int.Parse(number);
             if (x == 0)
             {
                 result = "0";
             }
             while (x > 0)
             {
-                result = LongToChar(x % Q) + result;
+                result = FromIntToChar(x % Q) + result;
                 x /= Q;
             }
             return result;
@@ -94,10 +94,10 @@ namespace ClassLibraryNumberTranslator
             Array.Resize(ref coef, coef.Length + 1);
             coef[coef.Length - 1] = '0';
 
-            double result = CharToLong(coef[0]);
+            double result = FromCharToInt(coef[0]);
             for (int i = 1; i < coef.Length; i++)
             {
-                result = result / x + CharToLong(coef[i]);
+                result = result / x + FromCharToInt(coef[i]);
             }
             return result;
         }
@@ -119,7 +119,7 @@ namespace ClassLibraryNumberTranslator
             while (x != Math.Truncate(x) && count < accuracy)
             {
                 x *= Q;
-                result += LongToChar((long)Math.Truncate(x));
+                result += FromIntToChar((int)Math.Truncate(x));
                 x -= (long)Math.Truncate(x);
                 count++;
             }
