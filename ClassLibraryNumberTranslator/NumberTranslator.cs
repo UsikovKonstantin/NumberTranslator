@@ -7,6 +7,7 @@ namespace ClassLibraryNumberTranslator
     /// </summary>
     public class NumberTranslator
     {
+        static string digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         /// <summary>
         /// Перевод целой части числа из системы с основанием P в систему с основанием 10
         /// Пример: FromPto10Int("101", 2) => "5"
@@ -128,26 +129,24 @@ namespace ClassLibraryNumberTranslator
 
         /// <summary>
         /// Перевод символа в число
-        /// Примеры: CharToLong('7') => 7; CharToLong('f') => 15; CharToLong('F') => 15
+        /// Примеры: 
         /// </summary>
         /// <param name="c"> символ </param>
         /// <returns> число </returns>
-        public static long CharToLong(char c)
+        public static int FromCharToInt (char c)
         {
-            return char.IsDigit(c) ? int.Parse(c.ToString()) : char.ToUpper(c) - 55;
+            return digits.IndexOf(char.ToUpper(c));
         }
+        
 
 
         /// <summary>
         /// Перевод числа в символ
-        /// Примеры: LongToChar(7) => '7'; LongToChar(15) => 'F'
+        /// Примеры:
         /// </summary>
         /// <param name="n"> число </param>
         /// <returns> символ </returns>
-        public static char LongToChar(long n)
-        {
-            return n < 10 ? (char)(n + 48) : (char)(n + 55);
-        }
+       
 
         /// <summary>
         /// Перевод целой части числа
