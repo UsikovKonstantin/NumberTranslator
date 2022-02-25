@@ -70,16 +70,6 @@ namespace WindowsFormsNumberTranslator
             {
                 string[] input = Number_Base_P.Text.Split('.', ',');
                 string result = "";
-                if (isminus()) // Для отрицательных чисел 
-                {
-                    result += "-";
-                    input[0] = input[0].Remove(0, 1);
-                }
-                if (input[0] == "")
-                {
-                    Number_Base_Q.Text = "";
-                    return;
-                }
                 result += NumberTranslator.FromPtoQInt(input[0], int.Parse(Base_P.Text), int.Parse(Base_Q.Text));
                 if (input.Length == 2 && int.Parse(Accuracy.Text) != 0 && double.Parse(input[1]) != 0) // Когда есть нецелая часть (дробная)
                 {
@@ -97,14 +87,6 @@ namespace WindowsFormsNumberTranslator
                 Number_Base_P_Error.Visible = true;
             }
         }
-        bool isminus()
-        {
-            if (Number_Base_P.Text[0] == '-')
-            {
-                return true;
-            }
-            return false;
-        }
         #endregion
 
         #region Number Base P Checks
@@ -113,18 +95,6 @@ namespace WindowsFormsNumberTranslator
         {
             // Введено ли что либо в поле текста?
             bool num_Fail = Number_Base_P_IsEmpty_Check();
-
-            // В исходном числе должен быть максимум 1 знак '-'
-            if (!num_Fail)
-            {
-                num_Fail = Number_Base_P_NegativeSignCount_Check();
-            }
-
-            // В исходном числе знак '-' может стоять только на первой позиции
-            if (!num_Fail)
-            {
-                num_Fail = Number_Base_P_MinusSignIsNotFirst_Check();
-            }
 
             // В исходном числе символ пунктуации не может стоять на первой или последней позиции
             if (!num_Fail)
@@ -138,14 +108,7 @@ namespace WindowsFormsNumberTranslator
                 num_Fail = Number_Base_P_HasMoreThanOnePunctuationMark_Check();
             }
 
-            // За минусом не может следовать знак пунктуации
-
-            if (!num_Fail)
-            {
-                num_Fail = Number_Base_P_Punctuation_After_Minus();
-            }
-
-            // В исходном числе допустимы только символы: '-', 0..9, a..z, A..Z, '.', ','
+            // В исходном числе допустимы только символы: 0..9, a..z, A..Z, '.', ','
             if (!num_Fail)
             {
                 num_Fail = Number_Base_P_SymbolValidity_Check();
@@ -165,30 +128,6 @@ namespace WindowsFormsNumberTranslator
             if (Number_Base_P.Text == "")
             {
                 Data_Label.Text += "Введите исходное число. \n";
-                Number_Base_P_Error.Visible = true;
-                return true;
-            }
-
-            return false;
-        }
-
-        bool Number_Base_P_NegativeSignCount_Check()
-        {
-            if (Number_Base_P.Text.IndexOf("-") != Number_Base_P.Text.LastIndexOf("-"))
-            {
-                Data_Label.Text += "В исходном числе присутствует более чем один символ '-'. \n";
-                Number_Base_P_Error.Visible = true;
-                return true;
-            }
-
-            return false;
-        }
-
-        bool Number_Base_P_MinusSignIsNotFirst_Check()
-        {
-            if (Number_Base_P.Text.IndexOf("-") != -1 && Number_Base_P.Text.IndexOf("-") != 0)
-            {
-                Data_Label.Text += "В исходном числе символ '-' стоит не на первой позиции. \n";
                 Number_Base_P_Error.Visible = true;
                 return true;
             }
@@ -224,17 +163,6 @@ namespace WindowsFormsNumberTranslator
             return false;
         }
 
-        bool Number_Base_P_Punctuation_After_Minus()
-        {
-            if (Number_Base_P.Text.Length > 1 && (Number_Base_P.Text[0] == '-' && (Number_Base_P.Text[1] == '.' || Number_Base_P.Text[1] == ',')))
-            {
-                Data_Label.Text += "За минусом не может следовать знак пунктуации. \n";
-                Number_Base_P_Error.Visible = true;
-                return true;
-            }
-            return false;
-        }
-
         bool Number_Base_P_SymbolValidity_Check()
         {
             foreach (char v in Number_Base_P.Text)
@@ -242,10 +170,9 @@ namespace WindowsFormsNumberTranslator
                 if (!(char.IsNumber(v)
                     || (v >= 'A' && v <= 'Z')
                     || (v >= 'a' && v <= 'z')
-                    || v == '.' || v == ','
-                    || v == '-'))
+                    || v == '.' || v == ','))
                 {
-                    Data_Label.Text += "Неверный ввод исходного числа. Допустимые символы: '-', 0..9, a..z, A..Z, '.', ','. \n";
+                    Data_Label.Text += "Неверный ввод исходного числа. Допустимые символы: 0..9, a..z, A..Z, '.', ','. \n";
                     Number_Base_P_Error.Visible = true;
                     return true;
                 }
