@@ -47,7 +47,7 @@ namespace UnitTestsNumberTranslator {
         }
 
         [TestMethod]
-        public void CharToLong_ReturnsLongNum() {
+        public void FromCharToInt_ReturnsIntNum() {
             bool test1 =(NumberTranslator.FromCharToInt('F') == 15);
             bool test2 =(NumberTranslator.FromCharToInt('f') == 15);
             bool test3 =(NumberTranslator.FromCharToInt('Z') == 35);
@@ -56,7 +56,7 @@ namespace UnitTestsNumberTranslator {
         }
 
         [TestMethod]
-        public void LongToChar_ReturnsStringNum() {
+        public void FromIntToChar_ReturnsStringNum() {
             bool test1 =(NumberTranslator.FromIntToChar(15) == 'F');
             bool test2 =(NumberTranslator.FromIntToChar(35) == 'Z');
             bool test3 =(NumberTranslator.FromIntToChar(4) == '4');
