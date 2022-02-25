@@ -184,7 +184,7 @@ namespace WindowsFormsNumberTranslator
         {
             foreach (char c in Number_Base_P.Text)
             {
-                if (NumberTranslator.CharToLong(c) >= int.Parse(Base_P.Text))
+                if (NumberTranslator.FromCharToInt(c) >= int.Parse(Base_P.Text))
                 {
                     Data_Label.Text += $"В исходном числе присутствует цифра \"{c}\" недопустимая в системе счисления {Base_P.Text}. \n";
                     Number_Base_P_Error.Visible = true;

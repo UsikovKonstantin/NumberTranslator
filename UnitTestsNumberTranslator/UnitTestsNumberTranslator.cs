@@ -48,18 +48,19 @@ namespace UnitTestsNumberTranslator {
 
         [TestMethod]
         public void CharToLong_ReturnsLongNum() {
-            bool test1 =(NumberTranslator.CharToLong('F') == 15);
-            bool test2 =(NumberTranslator.CharToLong('f') == 15);
-            bool test3 =(NumberTranslator.CharToLong('Z') == 35);
-            bool test4 =(NumberTranslator.CharToLong('4') == 4);
+            bool test1 =(NumberTranslator.FromCharToInt('F') == 15);
+            bool test2 =(NumberTranslator.FromCharToInt('f') == 15);
+            bool test3 =(NumberTranslator.FromCharToInt('Z') == 35);
+            bool test4 =(NumberTranslator.FromCharToInt('4') == 4);
             Assert.IsTrue(test1 && test2 && test3 && test4);
         }
 
         [TestMethod]
         public void LongToChar_ReturnsStringNum() {
-            bool test1 =(NumberTranslator.LongToChar(15) == 'F');
-            bool test2 =(NumberTranslator.LongToChar(35) == 'Z');
-            bool test3 =(NumberTranslator.LongToChar(4) == '4');
+            bool test1 =(NumberTranslator.FromIntToChar(15) == 'F');
+            bool test2 =(NumberTranslator.FromIntToChar(35) == 'Z');
+            bool test3 =(NumberTranslator.FromIntToChar(4) == '4');
+            bool test4 = (NumberTranslator.FromIntToChar(19) == 'J');
             Assert.IsTrue(test1 && test2 && test3);
         }
     }
