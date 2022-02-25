@@ -61,7 +61,7 @@ namespace UnitTestsNumberTranslator {
             bool test2 =(NumberTranslator.FromIntToChar(35) == 'Z');
             bool test3 =(NumberTranslator.FromIntToChar(4) == '4');
             bool test4 = (NumberTranslator.FromIntToChar(19) == 'J');
-            Assert.IsTrue(test1 && test2 && test3);
+            Assert.IsTrue(test1 && test2 && test3 && test4);
         }
     }
 }

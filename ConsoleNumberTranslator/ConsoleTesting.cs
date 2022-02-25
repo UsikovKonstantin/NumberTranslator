@@ -15,8 +15,8 @@ namespace ConsoleNumberTranslator
             From10toQFrac_Test();
             FromPtoQInt_Test();
             FromPtoQFrac_Test();
-            CharToLong_Test();
-            LongToChar_Test();
+            FromCharToInt_Test();
+            FromIntToChar_Test();
             Console.WriteLine("All tests passed.");
             Console.ReadLine();
         }
@@ -64,21 +64,22 @@ namespace ConsoleNumberTranslator
             Console.WriteLine("Tests for FromPtoQFrac passed.");
         }
 
-        static void CharToLong_Test()
+        static void FromCharToInt_Test()
         {
             Debug.Assert(NumberTranslator.FromCharToInt('F') == 15);
             Debug.Assert(NumberTranslator.FromCharToInt('f') == 15);
             Debug.Assert(NumberTranslator.FromCharToInt('Z') == 35);
             Debug.Assert(NumberTranslator.FromCharToInt('4') == 4);
-            Console.WriteLine("Tests for CharToLong passed.");
+            Console.WriteLine("Tests for FromCharToInt passed.");
         }
 
-        static void LongToChar_Test()
+        static void FromIntToChar_Test()
         {
             Debug.Assert(NumberTranslator.FromIntToChar(15) == 'F');
             Debug.Assert(NumberTranslator.FromIntToChar(35) == 'Z');
             Debug.Assert(NumberTranslator.FromIntToChar(4) == '4');
-            Console.WriteLine("Tests for LongToChar passed.");
+            Debug.Assert(NumberTranslator.FromIntToChar(19) == 'J');
+            Console.WriteLine("Tests for FromIntToChar passed.");
         }
 
     }
